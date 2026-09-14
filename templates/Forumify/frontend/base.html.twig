@@ -15,6 +15,15 @@
             {% set commandNetForums = commandNetForums|merge([unitForum]) %}
         {% endif %}
     {% endfor %}
+    {% set commandNetUnitForums = commandNetForums %}
+    {# A community need not use the example unit slugs to have a useful homepage. #}
+    {% if commandNetForums is empty %}
+        {% for availableForum in repository('Forumify\\Forum\\Entity\\Forum').findBy({}, {position: 'ASC'}, 50) %}
+            {% if can('view', availableForum) and commandNetForums|length < 6 %}
+                {% set commandNetForums = commandNetForums|merge([availableForum]) %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="cn-shell">
         <a class="cn-skip" href="#cn-main">Skip to content</a>
         {% block command_net_sidebar %}
@@ -23,7 +32,7 @@
                     {% if setting('forumify.logo') %}
                         <img src="{{ asset(setting('forumify.logo'), 'forumify.asset') }}" alt="" class="cn-patch">
                     {% else %}
-                        <i class="ph ph-compass cn-brand-mark" aria-hidden="true"></i>
+                        <img src="{{ asset('themes/majesticdev/command-net-theme/images/spearhead.png') }}" alt="" class="cn-patch">
                     {% endif %}
                     <strong>{{ setting('forumify.title')|default('Spearhead Gaming', true) }}</strong>
                     <span>People / Units / Operations</span>
@@ -62,17 +71,23 @@
                 </section>
             {% endblock %}
             {% block command_net_units %}
-                {% if commandNetForums is not empty %}
-                    <nav class="cn-units" aria-label="Unit channels">
-                        {% for unitForum in commandNetForums %}
-                            {% set unit = unitDefinitions[unitForum.slug] %}
+                <nav class="cn-units" aria-label="Unit channels">
+                    {% for slug, unit in unitDefinitions %}
+                        {% set matches = commandNetUnitForums|filter(f => f.slug == slug) %}
+                        {% set unitForum = matches|first %}
+                        {% if unitForum %}
                             <a href="{{ path('forumify_forum_forum', {slug: unitForum.slug}) }}" {% if forum is defined and forum is not null and forum.id == unitForum.id %}aria-current="page"{% endif %}>
                                 <i class="ph ph-{{ unit.icon }}" aria-hidden="true"></i>
                                 <span><strong>{{ unit.label }}</strong><small>{{ unit.subtitle }}</small></span>
                             </a>
-                        {% endfor %}
-                    </nav>
-                {% endif %}
+                        {% else %}
+                            <span class="cn-unit-unavailable" aria-disabled="true" title="Channel unavailable">
+                                <i class="ph ph-{{ unit.icon }}" aria-hidden="true"></i>
+                                <span><strong>{{ unit.label }}</strong><small>{{ unit.subtitle }}</small></span>
+                            </span>
+                        {% endif %}
+                    {% endfor %}
+                </nav>
             {% endblock %}
             {% block body_wrapper %}
                 <main id="cn-main" class="cn-main" tabindex="-1">
@@ -86,5 +101,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('themes/majesticdev/command-net-theme/command-net.js') }}?v=1.1.0" defer></script>
+    <script src="{{ asset('themes/majesticdev/command-net-theme/command-net.js') }}?v=1.1.1" defer></script>
 {% endblock %}

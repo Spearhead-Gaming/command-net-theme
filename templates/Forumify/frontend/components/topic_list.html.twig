@@ -23,6 +23,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    <div class="cn-topic-category"><a href="{{ path('forumify_forum_forum', {slug: forum.slug}) }}">{{ forum.title }}</a></div>
                     <div class="cn-topic-author">
                         {% if forum.displaySettings.showTopicAuthor %}
                             {% include '@Forumify/components/avatar.html.twig' with {user: topic.createdBy, className: 'avatar-sm'} only %}
