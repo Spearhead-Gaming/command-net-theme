@@ -130,3 +130,25 @@
  .cn-workspace .header > .responsive { min-height: 20px; }
 }
 
+
+/* Continuous terrain backdrop, including the native footer. */
+body {
+ background-color: #0e1210;
+ background-image: linear-gradient(#0e121030, #0e121060), url('images/terrain-texture.png');
+ background-position: right top;
+ background-size: cover;
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+}
+.cn-shell { background: transparent; }
+.cn-hero::before { content: none; }
+body > footer { background: transparent; }
+.cn-workspace { max-width: none; padding-bottom: 24px; }
+.cn-empty { border-left: 3px solid #b59e69; padding: 28px; background: #191e1af2; }
+.cn-empty p { color: #b9beb2; max-width: 52ch; line-height: 1.6; margin-bottom: 18px; }
+.cn-units a:hover { border-color: #c5ad74; background: #282e23; }
+.cn-shell a:focus-visible, .cn-shell button:focus-visible { outline: 2px solid #d7be80; outline-offset: 4px; }
+@media(max-width:600px) {
+ body { background-attachment: scroll; }
+ .cn-empty { padding: 22px 18px; }
+}
