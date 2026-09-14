@@ -1,0 +1,35 @@
+{% extends '@Forumify/frontend/base.html.twig' %}
+{% block title_page %}Command Net{% endblock %}
+{% block body %}
+<section class="cn-dashboard" aria-labelledby="cn-discussions-title">
+    <div class="cn-section-heading">
+        <h1 id="cn-discussions-title">Latest discussions</h1>
+        {% if commandNetForums is not empty %}
+            <div class="cn-filters" aria-label="Filter discussions by unit" hidden>
+                <button type="button" data-cn-filter="all" aria-pressed="true">All</button>
+                {% for unitForum in commandNetForums %}
+                    <button type="button" data-cn-filter="{{ unitForum.id }}" aria-pressed="false">{{ unitDefinitions[unitForum.slug].label }}</button>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    {% for unitForum in commandNetForums %}
+        <section class="cn-discussion-group" data-cn-unit="{{ unitForum.id }}" aria-label="{{ unitForum.title }}">
+            <div class="cn-group-heading"><h2>{{ unitForum.title }}</h2><a href="{{ path('forumify_forum_forum', {slug: unitForum.slug}) }}">{{ 'forum.topic.view_all'|trans }} <span aria-hidden="true">→</span></a></div>
+            {# Native query preserves pinned order, hidden topics and own-topic restrictions. #}
+            {{ component('TopicList', {forum: unitForum, limit: 6, sortMode: 'default', showControls: false, disablePagination: true}) }}
+        </section>
+    {% else %}
+        <div class="cn-empty">
+            <i class="ph ph-chats" aria-hidden="true"></i>
+            <h2>Your next operation starts here</h2>
+            <p>No unit discussions are available to you yet.</p>
+            <a class="btn-primary" href="{{ path('forumify_forum_forum') }}">Browse forums</a>
+        </div>
+    {% endfor %}
+</section>
+<section class="cn-online" aria-label="Community activity">
+    {{ component('Forumify\\Admin\\OnlineUsers', {limit: 12}) }}
+</section>
+
+{% endblock %}

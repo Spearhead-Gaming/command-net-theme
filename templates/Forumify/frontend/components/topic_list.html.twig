@@ -1,0 +1,52 @@
+{% extends '@!Forumify/frontend/components/topic_list.html.twig' %}
+{% block list %}
+    {% if this.showControls %}
+        {{ parent() }}
+    {% else %}
+        <div class="cn-table-heading" aria-hidden="true"><span>Topic</span><span>Author</span><span>Replies</span><span>Last activity</span></div>
+        <ul class="cn-topics">
+            {% for topic in this.result.rows %}
+                <li class="cn-topic{% if topic.pinned %} cn-topic-pinned{% endif %}{% if topic.hidden %} topic-hidden{% endif %}">
+                    <div class="cn-topic-title">
+                        <i class="ph ph-{{ topic.pinned ? 'push-pin' : 'chat-circle' }}" aria-hidden="true"></i>
+                        <div>
+                            {% if topic.pinned %}<span class="cn-pinned-label">Pinned</span>{% endif %}
+                            <a href="{{ path('forumify_forum_topic', {slug: topic.slug}) }}">{{ topic.title }}</a>
+                            {% if topic.locked %}<span aria-label="Locked"><i class="ph ph-lock" aria-hidden="true"></i></span>{% endif %}
+                            {% if topic.hidden %}<span aria-label="Hidden"><i class="ph ph-eye-slash" aria-hidden="true"></i></span>{% endif %}
+                            {{ component('ReadMarker', {item: topic}) }}
+                            {% if topic.tags is not empty %}
+                                <div class="cn-topic-tags">{% for tag in topic.tags %}{% include '@Forumify/frontend/forum/forum_tag.html.twig' with {tag: tag} only %}{% endfor %}</div>
+                            {% endif %}
+                            {% if forum.displaySettings.showTopicPreview and topic.firstComment %}
+                                <p class="cn-topic-preview">{{ topic.firstComment.content|striptags|u.truncate(140, '…', false) }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="cn-topic-author">
+                        {% if forum.displaySettings.showTopicAuthor %}
+                            {% include '@Forumify/components/avatar.html.twig' with {user: topic.createdBy, className: 'avatar-sm'} only %}
+                            <div>{% include '@Forumify/components/username.html.twig' with {user: topic.createdBy} only %}<small>{{ topic.createdAt|format_date }}</small></div>
+                        {% endif %}
+                    </div>
+                    <div class="cn-topic-replies">
+                        {% if forum.displaySettings.showTopicStatistics %}
+                            <span aria-label="Replies"><i class="ph ph-chat" aria-hidden="true"></i> {{ max(0, this.commentCount(topic) - 1)|short_number }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="cn-topic-activity">
+                        {% if forum.displaySettings.showTopicLastCommentBy %}
+                            {% set lastComment = topic|last_comment %}
+                            {% if lastComment %}
+                                <small>{{ lastComment.createdAt|format_date }}</small>
+                                {% include '@Forumify/components/username.html.twig' with {user: lastComment.createdBy} only %}
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </li>
+            {% else %}
+                <li class="cn-list-empty">No discussions to display.</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

@@ -11,8 +11,7 @@ use Forumify\Plugin\ThemeVarType;
 /**
  * "Command Net" — a dark tactical/military-ops theme for forumify.
  *
- * Rename the namespace/class (and the `name` + `forumify-plugin-class` entries
- * in composer.json) to match your own vendor before publishing.
+ * Version 1.1.0: native frontend shell and permission-aware dashboard.
  */
 class CommandNetTheme extends AbstractForumifyTheme
 {
@@ -21,7 +20,7 @@ class CommandNetTheme extends AbstractForumifyTheme
         return new PluginMetadata(
             'Command Net',
             'Spearhead Gaming',
-            'A dark, tactical military-ops inspired skin for forumify — squad/HQ dashboard styling, gold rank accents, status indicators, and a stencil-style header.'
+            'Command Net community dashboard with native Forumify navigation, unit channels, discussions and account controls.'
         );
     }
 
@@ -89,7 +88,7 @@ class CommandNetTheme extends AbstractForumifyTheme
                     label: 'Muted / Secondary Text',
                     type: ThemeVarType::Color,
                     defaultValue: '#5c5848',
-                    defaultDarkValue: '#8d8a78',
+                    defaultDarkValue: '#a5a99c',
                 ),
 
                 // Brand / accent
@@ -98,7 +97,7 @@ class CommandNetTheme extends AbstractForumifyTheme
                     label: 'Accent (Rank Gold)',
                     type: ThemeVarType::Color,
                     defaultValue: '#8a6d1f',
-                    defaultDarkValue: '#c9a227',
+                    defaultDarkValue: '#c7ab6c',
                 ),
                 new ThemeVar(
                     key: 'c-accent-contrast',
