@@ -1,0 +1,25 @@
+{
+    "name": "yourvendor/command-net-theme",
+    "description": "A dark, tactical military-ops inspired theme for forumify community hubs.",
+    "type": "forumify-theme",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Your Name / Community"
+        }
+    ],
+    "require": {
+        "forumify/forumify-platform": ">=1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "YourVendor\\CommandNetTheme\\": "src/"
+        }
+    },
+    "extra": {
+        "forumify-plugin-class": "YourVendor\\CommandNetTheme\\CommandNetTheme",
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}

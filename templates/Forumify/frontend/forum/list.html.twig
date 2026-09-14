@@ -1,0 +1,25 @@
+{#
+    Example template override — safe to delete if you don't need it.
+
+    This follows the pattern from the "Creating Themes" guide:
+    https://docs.forumify.net/guides/theme#templates
+
+    It extends the ORIGINAL core template (via the `@!` prefix) and only
+    wraps its output, so it keeps working even if forumify updates the
+    forum list template internally.
+
+    Template overrides only work for blocks the core template actually
+    defines. At the time of writing, block coverage varies by template —
+    inspect the installed version's .html.twig files (or ask in the
+    forumify Discord) to confirm which blocks are available for the
+    page you want to customize, then copy this pattern for it.
+#}
+{% extends '@!Forumify/frontend/forum/list.html.twig' %}
+
+{% block body %}
+    <div class="flex gap-4">
+        <div class="flex-1">
+            {{ parent() }}
+        </div>
+    </div>
+{% endblock %}

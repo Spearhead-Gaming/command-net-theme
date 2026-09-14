@@ -1,0 +1,315 @@
+/* =========================================================================
+   COMMAND NET — tactical/military-ops theme for forumify
+   ---------------------------------------------------------------------
+   Built on top of forumify's CSS-variable theming layer + documented
+   framework classes (.box, .card, .btn-*, text-*, h1-h6).
+
+   This file styles:
+     1. Fonts + base page
+     2. Framework primitives (box / card / buttons / typography)
+     3. Header / brand banner
+     4. Optional utility classes you can sprinkle into CMS content or
+        template overrides: status dots, tag pills, stat rows, avatars
+   ========================================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* -------------------------------------------------------------------------
+   1. Base
+   ------------------------------------------------------------------------- */
+
+:root {
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --radius: 3px;
+}
+
+body {
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    font-family: var(--font-body);
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%),
+        repeating-linear-gradient(0deg, rgba(120, 120, 100, 0.05) 0px, rgba(120, 120, 100, 0.05) 1px, transparent 1px, transparent 80px),
+        repeating-linear-gradient(90deg, rgba(120, 120, 100, 0.05) 0px, rgba(120, 120, 100, 0.05) 1px, transparent 1px, transparent 80px);
+    background-attachment: fixed;
+}
+
+a {
+    color: var(--c-accent);
+}
+
+a:hover {
+    color: var(--c-accent);
+    filter: brightness(1.15);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--c-text);
+}
+
+hr {
+    border-color: var(--c-border);
+}
+
+::selection {
+    background: var(--c-accent);
+    color: var(--c-accent-contrast);
+}
+
+/* Scrollbar, webkit only — purely cosmetic, safe to remove */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--c-bg-sunken); }
+::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: var(--radius); }
+::-webkit-scrollbar-thumb:hover { background: var(--c-accent); }
+
+/* -------------------------------------------------------------------------
+   2. Framework primitives
+   ------------------------------------------------------------------------- */
+
+.box {
+    background-color: var(--c-bg-elevated);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+}
+
+.card {
+    background-color: var(--c-bg-elevated);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.card-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background-color: var(--c-bg-sunken);
+    border-bottom: 1px solid var(--c-border);
+    color: var(--c-accent);
+    padding: 0.75rem 1rem;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-footer {
+    padding: 0.6rem 1rem;
+    border-top: 1px solid var(--c-border);
+    color: var(--c-text-muted);
+    font-size: 0.85rem;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-cta,
+.btn-outlined,
+.btn-link {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius);
+}
+
+.btn-primary {
+    background-color: var(--c-accent);
+    color: var(--c-accent-contrast);
+    border: 1px solid var(--c-accent);
+}
+
+.btn-primary:hover {
+    filter: brightness(1.1);
+}
+
+.btn-cta {
+    background-color: var(--c-status-live);
+    color: #ffffff;
+    border: 1px solid var(--c-status-live);
+}
+
+.btn-outlined {
+    background-color: transparent;
+    color: var(--c-accent);
+    border: 1px solid var(--c-accent);
+}
+
+.btn-outlined:hover {
+    background-color: var(--c-accent);
+    color: var(--c-accent-contrast);
+}
+
+.btn-link {
+    color: var(--c-text-muted);
+    border: none;
+    background: none;
+}
+
+/* -------------------------------------------------------------------------
+   3. Header / brand banner
+   ------------------------------------------------------------------------- */
+
+header,
+.site-header,
+.forumify-header {
+    background-color: var(--c-bg-sunken);
+    border-bottom: 2px solid var(--c-accent);
+}
+
+.site-header .logo,
+.forumify-header .logo,
+header .logo {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--c-text);
+}
+
+/* Nav / menu links — targets the Menu controller's rendered links.
+   If your installed version renders different markup, use devtools to
+   confirm the real class name and add a matching rule below. */
+nav a,
+.menu a {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    color: var(--c-text-muted);
+}
+
+nav a:hover,
+nav a.active,
+.menu a:hover,
+.menu a.active {
+    color: var(--c-accent);
+}
+
+/* -------------------------------------------------------------------------
+   4. Utility classes — optional, use these in CMS blocks / template
+      overrides to recreate the "Operation status" panel, category
+      tabs, status dots, and tag pills from the mockup.
+   ------------------------------------------------------------------------- */
+
+/* Status dot, e.g. <span class="status-dot status-dot--online"></span> Online */
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 0.4em;
+    vertical-align: middle;
+}
+.status-dot--online { background-color: var(--c-status-online); box-shadow: 0 0 6px var(--c-status-online); }
+.status-dot--live { background-color: var(--c-status-live); box-shadow: 0 0 6px var(--c-status-live); }
+
+/* Small uppercase label pill, e.g. category tags: <span class="tag-pill">HQ</span> */
+.tag-pill {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.55rem;
+    border-radius: 2px;
+    background-color: var(--c-bg-sunken);
+    border: 1px solid var(--c-border);
+    color: var(--c-text-muted);
+}
+.tag-pill--accent { background-color: var(--c-accent); color: var(--c-accent-contrast); border-color: var(--c-accent); }
+.tag-pill--live { background-color: var(--c-status-live); color: #fff; border-color: var(--c-status-live); }
+
+/* "LIVE" style badge for operation/event banners */
+.badge-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--c-status-live);
+}
+.badge-live::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--c-status-live);
+    box-shadow: 0 0 6px var(--c-status-live);
+}
+
+/* Stat row for panels like "Community Status / Operations / Server Status" */
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--c-border);
+    font-size: 0.85rem;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row .label {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--c-text-muted);
+    font-size: 0.75rem;
+}
+.stat-row .value { font-weight: 600; }
+
+/* Category tab strip, e.g. HQ / REAPER / MISFIT / GAMBLER / VIKING */
+.category-tabs {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+.category-tabs a {
+    flex: 1 1 160px;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1rem;
+    background-color: var(--c-bg-elevated);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    color: var(--c-text);
+    text-decoration: none;
+}
+.category-tabs a strong {
+    display: block;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+.category-tabs a span {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+}
+.category-tabs a.active,
+.category-tabs a:hover {
+    border-color: var(--c-accent);
+    box-shadow: inset 0 0 0 1px var(--c-accent);
+}
+.category-tabs a.active strong,
+.category-tabs a:hover strong {
+    color: var(--c-accent);
+}
+
+/* Avatar ring, e.g. wrap avatar <img> in <span class="avatar-ring">…</span> */
+.avatar-ring img {
+    border-radius: 50%;
+    border: 2px solid var(--c-border);
+}
+.avatar-ring--online img {
+    border-color: var(--c-status-online);
+}
+
+/* Pinned discussion strip */
+.pinned-strip {
+    border-left: 3px solid var(--c-status-live);
+    background-color: var(--c-bg-elevated);
+    padding: 1rem 1.25rem;
+}
