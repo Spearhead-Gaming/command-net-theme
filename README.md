@@ -1,4 +1,12 @@
-# Command Net — v1.1.0
+# Reference fidelity update � v1.1.1
+
+This update includes the original Spearhead patch, a generated decorative terrain texture, subdued condensed heading, tighter sidebar/header/unit proportions, and compact category-labelled discussion rows. Pinned rows appear above the discussion heading through CSS ordering; the native component DOM and query rules stay intact. All displays forum sections in admin order, not a globally sorted feed.
+
+Install all files, including public/reference.css and public/images/, and run plugin refresh and cache clear. This is prepared source; v1.1.1 has not been tagged or published. The existing v1.1.0 tag is unchanged.
+
+The reference's fixed event, online/game/Discord counts and extra destinations are not invented. Populate your CMS operation snippet and Menu Builder with real content. Source artwork stays unchanged; the heading font and map texture are approximations, not exact pixel copies. The reference palette is intentionally applied within the command shell regardless of prior saved accent colors.
+
+# Command Net — v1.1.1
 
 A native Forumify theme for Spearhead Gaming. Requires **PHP 8.4+ and Forumify ^1.3.1**. Template compatibility was checked against upstream tag `1.3.1`, commit `9b6947123513fa8b420c90f4d4d6b83f6cc9b19c`.
 
@@ -11,11 +19,11 @@ A native Forumify theme for Spearhead Gaming. Requires **PHP 8.4+ and Forumify ^
 - Forum view checks before rendering any unit links or discussion components. Native queries retain hidden-topic and own-topic-only restrictions.
 - Native account controls, notifications, alerts, posting, subscriptions, regular forum pages, CMS content, privacy link and Forumify attribution.
 
-The mockup's patch is not bundled as a cropped screenshot. Upload the original patch as the community logo; it displays uncropped in the sidebar. Without a logo, a compass fallback appears.
+The mockup's patch is not bundled as a cropped screenshot. Upload the original patch as the community logo; it displays uncropped in the sidebar. Without a configured logo, the original supplied SHG.png patch is used, bundled unchanged as public/images/spearhead.png.
 
 ## Install or upgrade
 
-After the reviewed implementation is published as the stable **v1.1.0 Git tag**, run in the Forumify application directory:
+After the reviewed implementation is published as the stable **v1.1.1 Git tag**, run in the Forumify application directory:
 
 ```sh
 composer require majesticdev/command-net-theme:^1.1 --with-all-dependencies
@@ -23,7 +31,7 @@ php bin/console forumify:plugins:refresh
 php bin/console cache:clear
 ```
 
-Activate Command Net in admin theme settings. Refresh copies `public/` into `public/themes/majesticdev/command-net-theme/`. Confirm both `style.css` and `command-net.js` load. Clear a reverse-proxy/browser cache if an old stylesheet remains. Existing admin color overrides remain configured; optionally reset them to use the revised default gold/muted text.
+Activate Command Net in admin theme settings. Refresh copies `public/` into `public/themes/majesticdev/command-net-theme/`. Confirm `style.css`, `reference.css`, and `command-net.js` load. Clear a reverse-proxy/browser cache if an old stylesheet remains. Existing admin color overrides remain configured; optionally reset them to use the revised default gold/muted text.
 
 The `1.1.x-dev` alias is not a stable release. Do not lower application minimum stability. Before publication, install the branch through a Composer path repository on staging, using an explicit development constraint scoped to this package. A source ZIP alone does not register a theme: use Composer and plugin refresh.
 
@@ -31,7 +39,7 @@ The `1.1.x-dev` alias is not a stable release. Do not lower application minimum 
 
 This replaces Forumify's **unconfigured homepage**. It does not overwrite an existing root CMS page or change `forumify.index`. The welcome page in the original screenshot becomes this dashboard once the theme is active.
 
-Default forum slugs are `hq`, `reaper`, `misfit`, `gambler`, and `viking`. Create those forums with your desired ACLs or map existing slugs below. No records are created by the theme. Missing/restricted units are omitted; an empty dashboard links to the forum index. Unit order follows admin forum position.
+Default forum slugs are `hq`, `reaper`, `misfit`, `gambler`, and `viking`. Create those forums with your desired ACLs or map existing slugs below. No records are created by the theme. Missing/restricted units remain as disabled, non-link labels. When no mapped unit forums are accessible, the dashboard selects up to six accessible forums from the first 50 forums in admin order; an empty community still has an honest empty state. Unit order follows admin forum position.
 
 The sidebar supplies Home and Forums. Configure Unit Channels, Events, Media, Resources, Members, Store, or installed plugin destinations in **Menu Builder** using real destinations and appropriate visibility. Avoid duplicate Home/Forums entries. Native menu collections continue to use Forumify's controller.
 
@@ -79,7 +87,7 @@ Treat the snippet as public editorial content; do not put restricted operation d
 | `public/style.css` | Native variable mapping and responsive styles |
 | `public/command-net.js` | Progressive filtering and active sidebar links |
 
-Only templates with existing upstream parents are overridden. Forumify automatically constructs the inheritance chain; new partial templates in this namespace can fail if an original does not exist. The old sample forum-list wrapper has been removed.
+Only templates with existing upstream parents are overridden. Forumify automatically constructs the inheritance chain; new partial templates in this namespace can fail if an original does not exist. The legacy forum-list file is retained as a first-line extends-only replacement to support ZIP upgrades.
 
 Fonts use Google Fonts with system fallbacks. Icons use Forumify's existing Phosphor assets. No frontend build is required to install the theme. Both light and dark modes remain available.
 
@@ -99,7 +107,7 @@ Local browser checks use rendered fixtures with the actual upstream stylesheet. 
 
 ### Staging release gate
 
-Before publishing v1.1.0:
+Before publishing v1.1.1:
 
 1. Refresh/activate the theme and verify assets and overrides load.
 2. Check guest/member/moderator views. Private units must be absent for unauthorized accounts; verify own-topic-only forums with two accounts.
@@ -111,7 +119,7 @@ There was no running Forumify application/database in this workspace. These inst
 
 ## Publish and rollback
 
-After staging passes, merge the reviewed changes and create an annotated `v1.1.0` tag at that commit. Publish the release and refresh the Composer package index. Do not add a composer.json version field or retag v1.0.0.
+After staging passes, merge the reviewed changes and create an annotated `v1.1.1` tag at that commit. Publish the release and refresh the Composer package index. Do not add a composer.json version field or retag v1.0.0.
 
 To roll back, select the prior theme or reinstall the previous stable version, refresh plugins and clear cache. No community data is migrated or removed.
 

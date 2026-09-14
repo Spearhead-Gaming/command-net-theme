@@ -67,7 +67,7 @@ $attributes = new class implements Stringable {
 $repository = new class($forums) {
     public array $forums;
     public function __construct(array $forums) { $this->forums = $forums; }
-    public function findBy(array $criteria, array $order): array { return array_values(array_filter($this->forums, fn ($f) => in_array($f->slug, $criteria['slug'], true))); }
+    public function findBy(array $criteria, array $order): array { return array_values(array_filter($this->forums, fn ($f) => (!isset($criteria['slug']) || in_array($f->slug, $criteria['slug'], true)))); }
 };
 $functions = [
     'setting' => static fn ($name) => $settings[$name] ?? null,
@@ -92,7 +92,7 @@ $functions = [
     'forum_menu' => static fn () => '<a href="/events">Events</a><a href="/resources">Resources</a>',
     'encore_entry_link_tags' => static fn ($name) => '<link rel="stylesheet" href="/native.css">',
     'encore_entry_script_tags' => static fn ($name) => '<!-- native scripts retained -->',
-    'theme_tags' => static fn () => '<link rel="stylesheet" href="/theme-vars.css"><link rel="stylesheet" href="/themes/majesticdev/command-net-theme/style.css">',
+    'theme_tags' => static fn () => '<link rel="stylesheet" href="/theme-vars.css"><link rel="stylesheet" href="/themes/majesticdev/command-net-theme/style.css"><link rel="stylesheet" href="/themes/majesticdev/command-net-theme/reference.css">',
 ];
 foreach ($functions as $name => $function) $twig->addFunction(new TwigFunction($name, $function, ['is_safe' => ['html']]));
 foreach (['imagine_filter', 'short_number', 'rich'] as $filter) $twig->addFilter(new TwigFilter($filter, static fn ($v, ...$args) => $v));
@@ -111,7 +111,7 @@ $twig->addFunction(new TwigFunction('component', static function ($name, $props 
     if ($name !== 'TopicList') return '';
     $forum = $props['forum'];
     $comment = (object)['createdBy' => $fixtureUser, 'createdAt' => new DateTimeImmutable('2026-09-14 10:00'), 'content' => '<p>Fixture preview &lt;script&gt; must stay text.</p>'];
-    $topic = (object)['slug' => 'fixture-' . $forum->slug, 'title' => 'Fixture discussion for ' . $forum->title, 'pinned' => true, 'hidden' => false, 'locked' => true, 'tags' => [], 'createdBy' => $fixtureUser, 'createdAt' => $comment->createdAt, 'firstComment' => $comment];
+    $topic = (object)['slug' => 'fixture-' . $forum->slug, 'title' => 'Fixture discussion for ' . $forum->title, 'pinned' => $forum->slug === 'hq', 'hidden' => false, 'locked' => true, 'tags' => [], 'createdBy' => $fixtureUser, 'createdAt' => $comment->createdAt, 'firstComment' => $comment];
     $component = new class {
         public bool $showControls = false;
         public bool $lastPageFirst = false;
@@ -135,6 +135,11 @@ if (isset($argv[3])) {
     if (!is_dir($argv[3])) mkdir($argv[3], 0777, true);
     file_put_contents($argv[3] . '/index.html', $html);
 }
+$repository->forums = [(object)['id' => 9, 'slug' => 'general', 'title' => 'General', 'displaySettings' => clone $display]];
+$htmlFallback = $twig->render('@Forumify/frontend/index.html.twig');
+check(str_contains($htmlFallback, 'Fixture discussion for General'), 'non-unit forum fallback renders real accessible forums');
+check(substr_count($htmlFallback, 'aria-disabled="true"') === 5, 'unmapped units have disabled navigation instead of broken links');
+$repository->forums = $forums;
 $denied = [2, 3, 4, 5];
 $calls = [];
 $html = $twig->render('@Forumify/frontend/index.html.twig');
