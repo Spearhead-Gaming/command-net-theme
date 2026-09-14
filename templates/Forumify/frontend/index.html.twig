@@ -8,11 +8,14 @@
             <div class="cn-filters" aria-label="Filter discussions by unit" hidden>
                 <button type="button" data-cn-filter="all" aria-pressed="true">All</button>
                 {% for unitForum in commandNetForums %}
-                    <button type="button" data-cn-filter="{{ unitForum.id }}" aria-pressed="false">{{ unitDefinitions[unitForum.slug].label }}</button>
+                    <button type="button" data-cn-filter="{{ unitForum.id }}" aria-pressed="false">{{ unitDefinitions[unitForum.slug].label|default(unitForum.title) }}</button>
                 {% endfor %}
             </div>
         {% endif %}
     </div>
+    {% if commandNetForums is not empty %}
+        <div class="cn-unified-heading" aria-hidden="true"><span>Topic</span><span>Category</span><span>Author</span><span>Replies</span><span>Last activity</span></div>
+    {% endif %}
     {% for unitForum in commandNetForums %}
         <section class="cn-discussion-group" data-cn-unit="{{ unitForum.id }}" aria-label="{{ unitForum.title }}">
             <div class="cn-group-heading"><h2>{{ unitForum.title }}</h2><a href="{{ path('forumify_forum_forum', {slug: unitForum.slug}) }}">{{ 'forum.topic.view_all'|trans }} <span aria-hidden="true">→</span></a></div>

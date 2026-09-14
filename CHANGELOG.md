@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.1
+
+- Bundle the original Spearhead patch unchanged and a generated terrain background.
+- Match reference proportions, muted palette, stencil masthead, pinned banner and compact discussion table.
+- Keep missing units visible as disabled labels; fall back to existing accessible forums.
+- Add category links and preserve live component DOM while visually consolidating rows.
+- Extend render coverage to non-unit forums and disabled unit links.
+
 ## 1.1.0
 
 - Add desktop sidebar, responsive navigation, Command Net masthead and operation briefing panel through native frontend overrides.
