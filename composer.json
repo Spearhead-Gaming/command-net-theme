@@ -13,13 +13,13 @@
     },
     "autoload": {
         "psr-4": {
-            "YourVendor\\CommandNetTheme\\": "src/"
+            "MajesticDev\\CommandNetTheme\\": "src/"
         }
     },
     "extra": {
         "forumify-plugin-class": "MajesticDev\\CommandNetTheme\\CommandNetTheme",
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-main": "1.0.x-dev"
         }
     }
 }
