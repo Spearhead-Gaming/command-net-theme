@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\CommandNetTheme;
+namespace MajesticDev\CommandNetTheme;
 
 use Forumify\Plugin\AbstractForumifyTheme;
 use Forumify\Plugin\PluginMetadata;
@@ -20,7 +20,7 @@ class CommandNetTheme extends AbstractForumifyTheme
     {
         return new PluginMetadata(
             'Command Net',
-            'Your Vendor',
+            'Spearhead Gaming',
             'A dark, tactical military-ops inspired skin for forumify — squad/HQ dashboard styling, gold rank accents, status indicators, and a stencil-style header.'
         );
     }
