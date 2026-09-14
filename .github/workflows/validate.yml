@@ -1,0 +1,24 @@
+name: Validate theme
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  templates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: forumify/forumify-platform
+          ref: '1.3.1'
+          path: .platform
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          tools: composer:v2
+      - run: composer validate --strict
+      - run: php -l src/CommandNetTheme.php
+      - run: node --check public/command-net.js
+      - run: composer install --working-dir=tests --no-interaction --no-plugins --no-scripts
+      - run: php tests/render.php .platform
+      - run: git diff --check

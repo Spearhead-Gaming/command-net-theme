@@ -1,0 +1,90 @@
+{% extends '@!Forumify/frontend/base.html.twig' %}
+
+{# Override this block locally to map existing forum slugs; no database writes. #}
+{% block base %}
+    {% set unitDefinitions = commandNetUnitDefinitions|default({
+        hq: {label: 'HQ', subtitle: 'Command & news', icon: 'compass'},
+        reaper: {label: 'Reaper', subtitle: 'Special operations', icon: 'skull'},
+        misfit: {label: 'Misfit', subtitle: 'Recon & scouting', icon: 'spade'},
+        gambler: {label: 'Gambler', subtitle: 'Aviation', icon: 'dice-five'},
+        viking: {label: 'Viking', subtitle: 'Infantry', icon: 'axe'}
+    }) %}
+    {% set commandNetForums = [] %}
+    {% for unitForum in repository('Forumify\\Forum\\Entity\\Forum').findBy({slug: unitDefinitions|keys}, {position: 'ASC'}) %}
+        {% if can('view', unitForum) %}
+            {% set commandNetForums = commandNetForums|merge([unitForum]) %}
+        {% endif %}
+    {% endfor %}
+    <div class="cn-shell">
+        <a class="cn-skip" href="#cn-main">Skip to content</a>
+        {% block command_net_sidebar %}
+            <aside class="cn-sidebar" aria-label="Community navigation">
+                <a class="cn-brand" href="{{ path('forumify_core_index') }}">
+                    {% if setting('forumify.logo') %}
+                        <img src="{{ asset(setting('forumify.logo'), 'forumify.asset') }}" alt="" class="cn-patch">
+                    {% else %}
+                        <i class="ph ph-compass cn-brand-mark" aria-hidden="true"></i>
+                    {% endif %}
+                    <strong>{{ setting('forumify.title')|default('Spearhead Gaming', true) }}</strong>
+                    <span>People / Units / Operations</span>
+                </a>
+                <nav class="cn-navigation" aria-label="Main navigation">
+                    <a href="{{ path('forumify_core_index') }}"><i class="ph ph-house" aria-hidden="true"></i>Home</a>
+                    <a href="{{ path('forumify_forum_forum') }}"><i class="ph ph-chats" aria-hidden="true"></i>Forums</a>
+                    {{ forum_menu() }}
+                </nav>
+                <p class="cn-motto">Discipline<br>Brotherhood<br>Good times<br>Always forward</p>
+            </aside>
+        {% endblock %}
+        <div class="cn-workspace">
+            {% include '@Forumify/frontend/blocks/header/header.html.twig' %}
+            {% include '@Forumify/frontend/blocks/alerts.html.twig' %}
+            {% block command_net_hero %}
+                <section class="cn-hero" aria-label="Command Net">
+                    <div class="cn-heading">
+                        <p class="cn-eyebrow">Ordinary players. Extraordinary brotherhood.</p>
+                        <div class="cn-title-line"><p class="cn-wordmark">Command Net</p><span class="cn-drill" aria-hidden="true">Plan<br>Coordinate<br>Deploy<br>Play<br>Repeat</span></div>
+                        <p class="cn-subtitle">{{ setting('forumify.title')|default('Spearhead Gaming', true) }}</p>
+                    </div>
+                    <aside class="cn-operation" aria-label="Operations briefing">
+                        {% block command_net_operation %}
+                            {% set briefing = snippet('command-net-operation') %}
+                            {% if briefing|trim %}
+                                {# snippet() returns platform-rendered/sanitized CMS markup. #}
+                                {{ briefing|raw }}
+                            {% else %}
+                                <h2><i class="ph ph-broadcast" aria-hidden="true"></i> Command briefing</h2>
+                                <p>Plan. Coordinate. Deploy.</p>
+                                <a href="{{ path('forumify_forum_forum') }}">Open community forums <span aria-hidden="true">↗</span></a>
+                            {% endif %}
+                        {% endblock %}
+                    </aside>
+                </section>
+            {% endblock %}
+            {% block command_net_units %}
+                {% if commandNetForums is not empty %}
+                    <nav class="cn-units" aria-label="Unit channels">
+                        {% for unitForum in commandNetForums %}
+                            {% set unit = unitDefinitions[unitForum.slug] %}
+                            <a href="{{ path('forumify_forum_forum', {slug: unitForum.slug}) }}" {% if forum is defined and forum is not null and forum.id == unitForum.id %}aria-current="page"{% endif %}>
+                                <i class="ph ph-{{ unit.icon }}" aria-hidden="true"></i>
+                                <span><strong>{{ unit.label }}</strong><small>{{ unit.subtitle }}</small></span>
+                            </a>
+                        {% endfor %}
+                    </nav>
+                {% endif %}
+            {% endblock %}
+            {% block body_wrapper %}
+                <main id="cn-main" class="cn-main" tabindex="-1">
+                    {% block main %}{% block body %}{% endblock %}{% endblock %}
+                </main>
+            {% endblock %}
+            <div class="cn-signoff"><span>{{ setting('forumify.title') }}</span><span>Same ground. Different stories. One brotherhood.</span></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('themes/majesticdev/command-net-theme/command-net.js') }}?v=1.1.0" defer></script>
+{% endblock %}

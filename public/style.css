@@ -1,315 +1,167 @@
-/* =========================================================================
-   COMMAND NET — tactical/military-ops theme for forumify
-   ---------------------------------------------------------------------
-   Built on top of forumify's CSS-variable theming layer + documented
-   framework classes (.box, .card, .btn-*, text-*, h1-h6).
-
-   This file styles:
-     1. Fonts + base page
-     2. Framework primitives (box / card / buttons / typography)
-     3. Header / brand banner
-     4. Optional utility classes you can sprinkle into CMS content or
-        template overrides: status dots, tag pills, stat rows, avatars
-   ========================================================================= */
-
+/* Command Net 1.1.0. Native Forumify assets load first. */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
-/* -------------------------------------------------------------------------
-   1. Base
-   ------------------------------------------------------------------------- */
-
 :root {
     --font-display: 'Oswald', 'Arial Narrow', sans-serif;
-    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    --radius: 3px;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --c-elevation-0: var(--c-bg, #101310);
+    --c-elevation-1: var(--c-bg-elevated, #191d19);
+    --c-elevation-2: var(--c-bg-sunken, #0c0f0c);
+    --c-elevation-3: var(--c-bg-elevated, #191d19);
+    --c-elevation-4: var(--c-bg-elevated, #191d19);
+    --c-elevation-5: var(--c-bg-elevated, #191d19);
+    --c-text-primary: var(--c-text, #deded3);
+    --c-text-secondary: var(--c-text-muted, #a5a99c);
+    --c-primary: var(--c-accent, #d0b367);
+    --c-primary-accent: var(--c-accent, #d0b367);
+    --c-primary-text: var(--c-accent-contrast, #14160f);
+    --c-call-to-action: var(--c-accent, #d0b367);
+    --c-call-to-action-accent: var(--c-accent, #d0b367);
+    --c-call-to-action-text: var(--c-accent-contrast, #14160f);
+    --c-hover: color-mix(in srgb, var(--c-text-primary) 7%, transparent);
+    --border-color: var(--c-border, #363b32);
+    --border-radius: 3px;
+    --button-border-radius: 3px;
+    --cn-sidebar-width: 212px;
 }
-
-body {
-    background-color: var(--c-bg);
-    color: var(--c-text);
-    font-family: var(--font-body);
-    background-image:
-        linear-gradient(rgba(0, 0, 0, 0.0) 0%, rgba(0, 0, 0, 0.0) 100%),
-        repeating-linear-gradient(0deg, rgba(120, 120, 100, 0.05) 0px, rgba(120, 120, 100, 0.05) 1px, transparent 1px, transparent 80px),
-        repeating-linear-gradient(90deg, rgba(120, 120, 100, 0.05) 0px, rgba(120, 120, 100, 0.05) 1px, transparent 1px, transparent 80px);
-    background-attachment: fixed;
+body { font-family: var(--font-body); background-color: var(--c-elevation-0); color: var(--c-text-primary); }
+h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
+a { color: var(--c-primary); }
+:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 4px; }
+.cn-shell { min-height: 90vh; background-image: linear-gradient(90deg, #87906b06 1px, transparent 1px), linear-gradient(#87906b06 1px, transparent 1px); background-size: 64px 64px; }
+.cn-shell *, .cn-shell *::before, .cn-shell *::after { box-sizing: border-box; }
+.cn-skip { position: fixed; top: 8px; left: 8px; padding: 12px; background: var(--c-elevation-1); z-index: 1000; transform: translateY(-200%); }
+.cn-skip:focus { transform: none; }
+.cn-sidebar { position: fixed; inset: 0 auto 0 0; width: var(--cn-sidebar-width); overflow-y: auto; background: var(--c-elevation-2); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: 20; }
+.cn-brand { display: flex; flex-direction: column; align-items: center; padding: 24px 18px; text-decoration: none; color: var(--c-text-primary); }
+.cn-patch { width: 100%; height: 220px; object-fit: contain; margin-bottom: 18px; }
+.cn-brand-mark { font-size: 120px; color: var(--c-primary); margin: 22px 0; }
+.cn-brand strong { font: 600 29px/1.1 var(--font-display); text-transform: uppercase; text-align: center; letter-spacing: .06em; overflow-wrap: anywhere; }
+.cn-brand > span { margin-top: 12px; color: var(--c-text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+.cn-navigation { display: flex; flex-direction: column; gap: 3px; margin: 4px 0 24px; }
+.cn-navigation > a, .cn-navigation > div > .btn-link { display: flex; align-items: center; justify-content: flex-start; min-height: 46px; padding: 10px 20px; gap: 16px; color: var(--c-text-secondary); font: 500 17px var(--font-body); text-decoration: none; border-left: 4px solid transparent; border-radius: 0; }
+.cn-navigation > div > .btn-link { width: 100%; }
+.cn-navigation i { font-size: 24px; }
+.cn-navigation .menu { position: static !important; transform: none !important; inset: auto !important; min-width: 0; width: 100%; box-shadow: none; padding: 4px 8px; }
+.cn-navigation .menu a { white-space: normal; overflow-wrap: anywhere; }
+.cn-navigation a[aria-current], .cn-navigation > a:hover { color: var(--c-primary); background: var(--c-hover); border-left-color: var(--c-primary); }
+.cn-motto { margin: auto 24px 30px; padding-left: 16px; border-left: 3px solid var(--border-color); text-transform: uppercase; letter-spacing: .24em; font-size: 11px; line-height: 1.7; color: var(--c-text-secondary); }
+.cn-workspace { margin-left: var(--cn-sidebar-width); padding: 0 24px; min-width: 0; }
+.cn-workspace .header { background: transparent; box-shadow: none; margin: 0; border-bottom: 1px solid var(--border-color); }
+.cn-workspace .header > .responsive { width: 100%; max-width: none; padding: 5px 0; min-height: 46px; align-items: center; }
+.cn-desktop-label { font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--c-text-secondary); }
+.cn-mobile-brand { display: none; }
+.cn-account { gap: 5px; }
+.cn-account .btn-link { gap: 8px; }
+.cn-account .menu { z-index: 50; }
+.cn-hero { display: grid; grid-template-columns: minmax(0, 1fr) 265px; gap: 22px; align-items: center; padding: 26px 0 30px; }
+.cn-heading { min-width: 0; }
+.cn-eyebrow { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--c-text-secondary); margin: 0 0 20px; }
+.cn-title-line { display: flex; align-items: center; gap: 16px; }
+.cn-wordmark { font: 700 clamp(42px, 5.6vw, 96px)/1.1 var(--font-display); letter-spacing: -.035em; text-transform: uppercase; margin: 0; color: var(--c-primary); white-space: nowrap; text-shadow: 1px 1px 0 var(--border-color); }
+.cn-drill { border-left: 1px solid var(--c-primary); padding-left: 10px; font-size: 10px; line-height: 1.9; text-transform: uppercase; color: var(--c-text-secondary); }
+.cn-subtitle { display: flex; align-items: center; gap: 16px; margin: 14px 0 0; font: 400 14px var(--font-display); text-transform: uppercase; letter-spacing: .42em; color: var(--c-text-secondary); }
+.cn-subtitle::before, .cn-subtitle::after { content: ''; flex: 1; height: 1px; background: var(--border-color); }
+.cn-operation { border: 1px solid var(--border-color); padding: 16px; background: var(--c-elevation-2); box-shadow: inset 0 0 0 3px var(--c-hover); min-width: 0; overflow-wrap: anywhere; }
+.cn-operation h2, .cn-operation h3 { font: 500 19px var(--font-display); text-transform: uppercase; margin: 0 0 14px; }
+.cn-operation p { font-size: 15px; color: var(--c-text-secondary); }
+.cn-operation a { font-size: 14px; }
+.cn-operation dl { margin: 0; font-size: 13px; }
+.cn-operation dl > div { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--border-color); }
+.cn-operation dd { margin: 0; }
+.cn-units { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
+.cn-units a { display: flex; align-items: center; gap: 16px; padding: 12px 14px; border: 1px solid var(--border-color); background: var(--c-elevation-1); color: var(--c-text-primary); text-decoration: none; min-width: 0; }
+.cn-units a:hover, .cn-units a[aria-current] { border-color: var(--c-primary); box-shadow: inset 0 0 0 1px var(--c-primary); color: var(--c-primary); }
+.cn-units i { font-size: 36px; }
+.cn-units strong { display: block; font: 500 19px var(--font-display); text-transform: uppercase; }
+.cn-units small { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--c-text-secondary); }
+.cn-main { min-width: 0; min-height: 240px; }
+.cn-main > .responsive { max-width: 100%; }
+.cn-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin: 22px 0 14px; }
+.cn-section-heading h1 { font-size: 23px; text-transform: uppercase; letter-spacing: .04em; border-left: 4px solid var(--c-primary); padding-left: 12px; margin: 0; }
+.cn-filters { display: flex; flex-wrap: wrap; gap: 6px; }
+.cn-filters button { font: 500 14px var(--font-body); color: var(--c-text-secondary); text-transform: uppercase; border: 0; border-bottom: 2px solid transparent; background: none; padding: 10px 14px; cursor: pointer; }
+.cn-filters button[aria-pressed=true] { color: var(--c-primary); border-bottom-color: var(--c-primary); }
+.cn-group-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 12px 0 8px; }
+.cn-group-heading h2 { font-size: 16px; text-transform: uppercase; letter-spacing: .08em; margin: 0; }
+.cn-group-heading a { font-size: 13px; }
+.cn-discussion-group { margin-bottom: 20px; }
+.cn-table-heading, .cn-topic { display: grid; grid-template-columns: minmax(0, 1fr) 160px 65px 140px; align-items: center; gap: 16px; }
+.cn-table-heading { padding: 9px 14px; font-size: 11px; text-transform: uppercase; color: var(--c-text-secondary); letter-spacing: .08em; background: var(--c-elevation-2); }
+.cn-topics { list-style: none; padding: 0; margin: 0; }
+.cn-topic { padding: 14px; border-top: 1px solid var(--border-color); background: var(--c-elevation-1); min-height: 74px; font-size: 15px; }
+.cn-topic:nth-child(even) { background: var(--c-elevation-0); }
+.cn-topic:focus-within, .cn-topic:hover { background: var(--c-hover); }
+.cn-topic-pinned { border-left: 5px solid var(--c-status-live, #c85548); }
+.cn-topic-title { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.cn-topic-title > i { color: var(--c-primary); font-size: 24px; }
+.cn-topic-title > div { min-width: 0; overflow-wrap: anywhere; }
+.cn-topic-title a { color: var(--c-text-primary); font-weight: 600; text-decoration: none; }
+.cn-topic-title a:hover { text-decoration: underline; color: var(--c-primary); }
+.cn-pinned-label { display: block; text-transform: uppercase; letter-spacing: .06em; color: var(--c-status-live, #c85548); font-size: 12px; }
+.cn-topic-author { display: flex; gap: 8px; align-items: center; min-width: 0; overflow-wrap: anywhere; }
+.cn-topic-author small, .cn-topic-activity small { display: block; color: var(--c-text-secondary); font-size: 12px; }
+.cn-topic-activity { min-width: 0; overflow-wrap: anywhere; }
+.cn-topic-replies { color: var(--c-text-secondary); }
+.cn-topic-preview { margin: 4px 0 0; color: var(--c-text-secondary); font-size: 14px; }
+.cn-topic-tags { margin-top: 4px; }
+.cn-empty { border: 1px solid var(--border-color); background: var(--c-elevation-1); padding: 36px 24px; text-align: center; }
+.cn-empty > i { font-size: 40px; color: var(--c-primary); }
+.cn-empty h2 { font-size: 24px; margin-top: 16px; }
+.cn-list-empty { padding: 24px; color: var(--c-text-secondary); }
+.cn-online { margin-top: 24px; }
+.cn-online .card { display: flex; align-items: center; flex-wrap: wrap; }
+.cn-online .card-title { border: 0; background: none; font: 500 14px var(--font-body); text-transform: uppercase; }
+.cn-online .card-title::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--c-status-online, #83b474); margin-right: 8px; }
+.cn-online .card-body { display: flex; flex: 1; flex-wrap: wrap; gap: 14px; padding: 12px; }
+.cn-online .card-footer { flex-basis: 100%; }
+.cn-signoff { display: flex; justify-content: space-between; gap: 24px; padding: 24px 0; color: var(--c-text-secondary); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; }
+body > footer { margin-left: var(--cn-sidebar-width); padding: 0 24px 20px; }
+.cn-shell [hidden] { display: none !important; }
+@media (min-width: 1600px) { .cn-workspace { max-width: 1700px; } }
+@media (max-width: 1150px) {
+    :root { --cn-sidebar-width: 178px; }
+    .cn-workspace { padding: 0 18px; }
+    .cn-brand strong { font-size: 24px; }
+    .cn-patch { height: 170px; }
+    .cn-hero { grid-template-columns: minmax(0, 1fr) 220px; }
+    .cn-wordmark { font-size: clamp(36px, 5.2vw, 68px); }
+    .cn-drill { display: none; }
+    .cn-table-heading, .cn-topic { grid-template-columns: minmax(0, 1fr) 130px 50px 105px; gap: 10px; }
+    .cn-units { grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); }
+    .cn-units a { gap: 8px; padding: 10px; }
+    .cn-units i { font-size: 26px; }
 }
-
-a {
-    color: var(--c-accent);
+@media (max-width: 800px) {
+    :root { --cn-sidebar-width: 0px; }
+    .cn-sidebar { position: static; width: auto; overflow: visible; border-right: 0; border-bottom: 1px solid var(--border-color); }
+    .cn-brand, .cn-motto { display: none; }
+    .cn-navigation { flex-direction: row; flex-wrap: wrap; padding: 8px; margin: 0; gap: 4px; }
+    .cn-navigation > a, .cn-navigation > div > .btn-link { min-height: 44px; font-size: 15px; padding: 8px 12px; gap: 8px; border-left: 0; border-bottom: 2px solid transparent; }
+    .cn-navigation a[aria-current] { border-bottom-color: var(--c-primary); }
+    .cn-navigation i { font-size: 20px; }
+    .cn-mobile-brand { display: flex; font: 500 16px var(--font-display); text-transform: uppercase; }
+    .cn-desktop-label { display: none; }
+    .cn-wordmark { font-size: clamp(36px, 7vw, 58px); }
+    .cn-hero { gap: 16px; }
+    .cn-eyebrow { font-size: 10px; letter-spacing: .15em; }
 }
-
-a:hover {
-    color: var(--c-accent);
-    filter: brightness(1.15);
+@media (max-width: 600px) {
+    .cn-workspace { padding: 0 12px; }
+    .cn-hero { grid-template-columns: 1fr; padding: 22px 0; }
+    .cn-wordmark { font-size: clamp(38px, 11vw, 66px); }
+    .cn-subtitle { font-size: 12px; letter-spacing: .24em; }
+    .cn-operation { padding: 14px; }
+    .cn-units { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .cn-units a:last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .cn-table-heading { display: none; }
+    .cn-topic { grid-template-columns: minmax(0, 1fr) auto; gap: 10px; padding: 14px 12px; }
+    .cn-topic-title { grid-column: 1 / -1; }
+    .cn-topic-author { grid-column: 1; }
+    .cn-topic-replies { grid-column: 2; }
+    .cn-topic-activity { grid-column: 1 / -1; display: flex; gap: 8px; align-items: baseline; }
+    .cn-topic-activity:empty { display: none; }
+    .cn-filters button { min-height: 44px; padding: 10px; }
+    .cn-signoff { flex-direction: column; gap: 8px; }
+    .cn-online .card-body { flex-basis: 100%; }
 }
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--c-text);
-}
-
-hr {
-    border-color: var(--c-border);
-}
-
-::selection {
-    background: var(--c-accent);
-    color: var(--c-accent-contrast);
-}
-
-/* Scrollbar, webkit only — purely cosmetic, safe to remove */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: var(--c-bg-sunken); }
-::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: var(--radius); }
-::-webkit-scrollbar-thumb:hover { background: var(--c-accent); }
-
-/* -------------------------------------------------------------------------
-   2. Framework primitives
-   ------------------------------------------------------------------------- */
-
-.box {
-    background-color: var(--c-bg-elevated);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-}
-
-.card {
-    background-color: var(--c-bg-elevated);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-    overflow: hidden;
-}
-
-.card-title {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    background-color: var(--c-bg-sunken);
-    border-bottom: 1px solid var(--c-border);
-    color: var(--c-accent);
-    padding: 0.75rem 1rem;
-}
-
-.card-body {
-    padding: 1rem;
-}
-
-.card-footer {
-    padding: 0.6rem 1rem;
-    border-top: 1px solid var(--c-border);
-    color: var(--c-text-muted);
-    font-size: 0.85rem;
-}
-
-/* Buttons */
-.btn-primary,
-.btn-cta,
-.btn-outlined,
-.btn-link {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    border-radius: var(--radius);
-}
-
-.btn-primary {
-    background-color: var(--c-accent);
-    color: var(--c-accent-contrast);
-    border: 1px solid var(--c-accent);
-}
-
-.btn-primary:hover {
-    filter: brightness(1.1);
-}
-
-.btn-cta {
-    background-color: var(--c-status-live);
-    color: #ffffff;
-    border: 1px solid var(--c-status-live);
-}
-
-.btn-outlined {
-    background-color: transparent;
-    color: var(--c-accent);
-    border: 1px solid var(--c-accent);
-}
-
-.btn-outlined:hover {
-    background-color: var(--c-accent);
-    color: var(--c-accent-contrast);
-}
-
-.btn-link {
-    color: var(--c-text-muted);
-    border: none;
-    background: none;
-}
-
-/* -------------------------------------------------------------------------
-   3. Header / brand banner
-   ------------------------------------------------------------------------- */
-
-header,
-.site-header,
-.forumify-header {
-    background-color: var(--c-bg-sunken);
-    border-bottom: 2px solid var(--c-accent);
-}
-
-.site-header .logo,
-.forumify-header .logo,
-header .logo {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--c-text);
-}
-
-/* Nav / menu links — targets the Menu controller's rendered links.
-   If your installed version renders different markup, use devtools to
-   confirm the real class name and add a matching rule below. */
-nav a,
-.menu a {
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.03em;
-    color: var(--c-text-muted);
-}
-
-nav a:hover,
-nav a.active,
-.menu a:hover,
-.menu a.active {
-    color: var(--c-accent);
-}
-
-/* -------------------------------------------------------------------------
-   4. Utility classes — optional, use these in CMS blocks / template
-      overrides to recreate the "Operation status" panel, category
-      tabs, status dots, and tag pills from the mockup.
-   ------------------------------------------------------------------------- */
-
-/* Status dot, e.g. <span class="status-dot status-dot--online"></span> Online */
-.status-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 0.4em;
-    vertical-align: middle;
-}
-.status-dot--online { background-color: var(--c-status-online); box-shadow: 0 0 6px var(--c-status-online); }
-.status-dot--live { background-color: var(--c-status-live); box-shadow: 0 0 6px var(--c-status-live); }
-
-/* Small uppercase label pill, e.g. category tags: <span class="tag-pill">HQ</span> */
-.tag-pill {
-    display: inline-block;
-    font-family: var(--font-display);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    padding: 0.15rem 0.55rem;
-    border-radius: 2px;
-    background-color: var(--c-bg-sunken);
-    border: 1px solid var(--c-border);
-    color: var(--c-text-muted);
-}
-.tag-pill--accent { background-color: var(--c-accent); color: var(--c-accent-contrast); border-color: var(--c-accent); }
-.tag-pill--live { background-color: var(--c-status-live); color: #fff; border-color: var(--c-status-live); }
-
-/* "LIVE" style badge for operation/event banners */
-.badge-live {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35em;
-    font-family: var(--font-display);
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--c-status-live);
-}
-.badge-live::before {
-    content: '';
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--c-status-live);
-    box-shadow: 0 0 6px var(--c-status-live);
-}
-
-/* Stat row for panels like "Community Status / Operations / Server Status" */
-.stat-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--c-border);
-    font-size: 0.85rem;
-}
-.stat-row:last-child { border-bottom: none; }
-.stat-row .label {
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    color: var(--c-text-muted);
-    font-size: 0.75rem;
-}
-.stat-row .value { font-weight: 600; }
-
-/* Category tab strip, e.g. HQ / REAPER / MISFIT / GAMBLER / VIKING */
-.category-tabs {
-    display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
-.category-tabs a {
-    flex: 1 1 160px;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.75rem 1rem;
-    background-color: var(--c-bg-elevated);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius);
-    color: var(--c-text);
-    text-decoration: none;
-}
-.category-tabs a strong {
-    display: block;
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-}
-.category-tabs a span {
-    display: block;
-    font-size: 0.7rem;
-    color: var(--c-text-muted);
-    text-transform: uppercase;
-}
-.category-tabs a.active,
-.category-tabs a:hover {
-    border-color: var(--c-accent);
-    box-shadow: inset 0 0 0 1px var(--c-accent);
-}
-.category-tabs a.active strong,
-.category-tabs a:hover strong {
-    color: var(--c-accent);
-}
-
-/* Avatar ring, e.g. wrap avatar <img> in <span class="avatar-ring">…</span> */
-.avatar-ring img {
-    border-radius: 50%;
-    border: 2px solid var(--c-border);
-}
-.avatar-ring--online img {
-    border-color: var(--c-status-online);
-}
-
-/* Pinned discussion strip */
-.pinned-strip {
-    border-left: 3px solid var(--c-status-live);
-    background-color: var(--c-bg-elevated);
-    padding: 1rem 1.25rem;
-}
+@media (prefers-reduced-motion: reduce) { .cn-shell * { scroll-behavior: auto; } }

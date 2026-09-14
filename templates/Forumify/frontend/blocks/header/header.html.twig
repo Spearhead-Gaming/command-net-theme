@@ -1,0 +1,24 @@
+{% extends '@!Forumify/frontend/blocks/header/header.html.twig' %}
+{% block header_logo %}
+    <a href="{{ path('forumify_core_index') }}" class="header-logo cn-mobile-brand">Command Net</a>
+    <span class="cn-desktop-label">Community / Command network</span>
+{% endblock %}
+{% block header_navigtion %}
+    <div class="cn-account flex items-center justify-end flex-grow">
+        {% if app.user %}
+            <div {{ stimulus_controller('forumify/menu', {placement: 'bottom-end'}) }}>
+                <button type="button" class="btn-link" aria-label="Account menu" {{ stimulus_target('forumify/menu', 'openButton') }}>
+                    {% include '@Forumify/components/avatar.html.twig' with {user: app.user, className: 'avatar-sm'} only %}
+                    <span class="hide-phone">{{ app.user.displayName }}</span>
+                </button>
+                <div class="menu" {{ stimulus_target('forumify/menu', 'menu') }}>
+                    {% include '@Forumify/frontend/blocks/header/fixed_menu.html.twig' %}
+                </div>
+            </div>
+            {{ component('Notifications', {loading: 'defer'}) }}
+        {% else %}
+            <a class="btn-link" href="{{ path('forumify_core_login', {_target_path: app.request.requestUri}) }}">{{ 'login'|trans }}</a>
+        {% endif %}
+        <a class="btn-link btn-icon" href="{{ path('forumify_core_theme_toggle', {_target_path: app.request.requestUri}) }}" aria-label="{{ 'toggle_theme'|trans }}" {{ stimulus_controller('forumify/theme') }}><i class="ph ph-circle-half-tilt" aria-hidden="true"></i></a>
+    </div>
+{% endblock %}

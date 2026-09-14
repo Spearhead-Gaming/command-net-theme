@@ -1,0 +1,11 @@
+{
+    "name": "majesticdev/command-net-theme-tests",
+    "description": "Isolated template contract tests; not shipped to Forumify",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.4",
+        "twig/twig": "^3.11.2",
+        "twig/string-extra": "^3.11",
+        "symfony/filesystem": "^7.4"
+    }
+}
