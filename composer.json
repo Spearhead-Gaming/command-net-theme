@@ -1,11 +1,11 @@
 {
-    "name": "yourvendor/command-net-theme",
-    "description": "A dark, tactical military-ops inspired theme for forumify community hubs.",
+    "name": "majesticdev/command-net-theme",
+    "description": "A dark, tactical military-ops-inspired theme for forumify community hubs.",
     "type": "forumify-theme",
     "license": "proprietary",
     "authors": [
         {
-            "name": "Your Name / Community"
+            "name": "Majestic44 / Spearhead Gaming"
         }
     ],
     "require": {
@@ -17,7 +17,7 @@
         }
     },
     "extra": {
-        "forumify-plugin-class": "YourVendor\\CommandNetTheme\\CommandNetTheme",
+        "forumify-plugin-class": "MajesticDev\\CommandNetTheme\\CommandNetTheme",
         "branch-alias": {
             "dev-master": "1.0.x-dev"
         }
