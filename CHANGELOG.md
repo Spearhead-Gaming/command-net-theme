@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- Fix: activating this theme silently broke the admin dashboard's color scheme and
+  light/dark toggle. ThemeService generates the site's CSS from whichever theme is
+  *active*, without falling back to the base Forumify Theme's variables - so a theme
+  that only defines its own bespoke vars (as this one did) leaves every surface that
+  isn't explicitly reskinned by style.css/reference.css (most notably the whole admin
+  panel, which intentionally excludes a theme's custom stylesheets) without a color
+  scheme at all. Filled in the full set of variables Forumify\ForumifyTheme ships
+  (c-primary, c-elevation-0..5, border-*, etc.) using this theme's own tactical
+  palette, so admin gets a matching dark/light scheme with no core template changes.
+
 ## 1.1.1
 
 - Bundle the original Spearhead patch unchanged and a generated terrain background.
