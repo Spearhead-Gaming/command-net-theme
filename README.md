@@ -62,19 +62,29 @@ Forumify chains local theme overrides after the package. Clear the application c
 
 ### Operation briefing
 
-Create a CMS snippet with slug **`command-net-operation`**. Its rendered content fills the panel. Without it, a neutral forum link appears. Fill it with confirmed editorial details or your installed plugin's documented widget/component. This theme does not poll game servers or claim operational status.
+By default (no `command-net-operation` snippet, or an empty one) the panel now shows **real data**, not placeholders:
 
-Example structure to populate:
+- Community status: current online-user count (`command_net_online_count()`, same 5-minute activity window as Forumify's own online-users widget).
+- Operations: count of not-yet-cancelled, not-yet-started `MajesticDev\CommandNet\Entity\Operation` rows (`OperationRepository::countUpcoming()`).
+- Upcoming event: the soonest such operation's title and start time (`OperationRepository::findNextUpcoming()`); a "Live" badge appears automatically when that operation's status is `in_progress`.
 
-```html
-<h2>Operation briefing</h2>
-<dl>
-  <div><dt>Next event</dt><dd>Enter the confirmed schedule</dd></div>
-  <div><dt>Briefing</dt><dd>Enter the published briefing location</dd></div>
-</dl>
-```
+Nothing here polls a game server. To also show a **server status** line, create a CMS snippet with slug **`command-net-server-status`** containing plain text (e.g. `Operational`) — it's admin-typed, not fetched, and the row is omitted entirely if the snippet doesn't exist. To fully replace the whole panel with your own editorial content instead, create a CMS snippet with slug **`command-net-operation`**; its rendered content wins over everything above, same as before.
 
-Treat the snippet as public editorial content; do not put restricted operation details in it. Forumify's snippet renderer owns sanitization/rendering. Dynamic forum sections retain their ACL checks.
+### Online activity stats
+
+The "online now" bar's "On forums" number is the same live count as above. To also show "In game" and "In Discord" numbers, create CMS snippets **`command-net-in-game-count`** and **`command-net-discord-count`** with plain numeric text — each stat only renders when its snippet exists and is non-empty. These are not polled from any game server or Discord's API; update them by hand.
+
+### Sidebar navigation
+
+Home and Forums are built in. Everything else — Unit Channels, Events, Media, Resources, Members, Store, or any installed plugin's own pages — is Forumify's native **Menu Builder** (Settings → Menu in admin), rendered automatically by the existing `forum_menu()` call. A menu item's "Route" type can target any named route, including this plugin's own `command_net_roster` (Members) or `forumify_cms_page` with a `urlKey` parameter (for a CMS page you've created). No theme code is involved in adding these.
+
+### Sidebar ribbon and grid HUD
+
+The "Spearhead" ribbon above the sidebar patch is static branding, matching the hardcoded "Command Net" wordmark elsewhere. The decorative grid-reference text in the top-right HUD (visible at wide/desktop widths) defaults to "AO SPEARHEAD" but can be overridden with a plain-text CMS snippet slug **`command-net-grid-ref`** — purely cosmetic, not a real coordinate.
+
+### Discussion category tags
+
+The "Category" column and each row's icon now come from the topic's first Forum Tag (Admin → Forums → a forum → Tags), using that tag's own admin-configured color (`tag.color`, contrast-computed text via the existing `fg_color` filter) — not a fixed palette. The icon is looked up from the tag's slug against a small built-in map (`hq`/`announcements` → megaphone, `operations` → calendar, `media` → camera, `training` → graduation cap, `introductions` → question mark), falling back to a generic chat icon for anything else; pinned topics always use the megaphone icon regardless of tag. A topic with no tag falls back to showing its forum's name, as before.
 
 ## Files
 

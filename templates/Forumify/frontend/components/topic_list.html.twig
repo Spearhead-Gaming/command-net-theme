@@ -5,25 +5,38 @@
     {% else %}
         <div class="cn-table-heading" aria-hidden="true"><span>Topic</span><span>Author</span><span>Replies</span><span>Last activity</span></div>
         <ul class="cn-topics">
+            {% set cnCategoryIcons = {
+                hq: 'megaphone',
+                announcements: 'megaphone',
+                operations: 'calendar',
+                media: 'camera',
+                training: 'graduation-cap',
+                introductions: 'question'
+            } %}
             {% for topic in this.result.rows %}
+                {% set primaryTag = topic.tags|first %}
+                {% set cnIcon = topic.pinned ? 'megaphone' : cnCategoryIcons[primaryTag ? primaryTag.slug : '']|default('chat-circle') %}
                 <li class="cn-topic{% if topic.pinned %} cn-topic-pinned{% endif %}{% if topic.hidden %} topic-hidden{% endif %}">
                     <div class="cn-topic-title">
-                        <i class="ph ph-{{ topic.pinned ? 'push-pin' : 'chat-circle' }}" aria-hidden="true"></i>
+                        <i class="ph ph-{{ cnIcon }}" aria-hidden="true"></i>
                         <div>
                             {% if topic.pinned %}<span class="cn-pinned-label">Pinned</span>{% endif %}
                             <a href="{{ path('forumify_forum_topic', {slug: topic.slug}) }}">{{ topic.title }}</a>
                             {% if topic.locked %}<span aria-label="Locked"><i class="ph ph-lock" aria-hidden="true"></i></span>{% endif %}
                             {% if topic.hidden %}<span aria-label="Hidden"><i class="ph ph-eye-slash" aria-hidden="true"></i></span>{% endif %}
                             {{ component('ReadMarker', {item: topic}) }}
-                            {% if topic.tags is not empty %}
-                                <div class="cn-topic-tags">{% for tag in topic.tags %}{% include '@Forumify/frontend/forum/forum_tag.html.twig' with {tag: tag} only %}{% endfor %}</div>
-                            {% endif %}
                             {% if forum.displaySettings.showTopicPreview and topic.firstComment %}
                                 <p class="cn-topic-preview">{{ topic.firstComment.content|striptags|u.truncate(140, '…', false) }}</p>
                             {% endif %}
                         </div>
                     </div>
-                    <div class="cn-topic-category"><a href="{{ path('forumify_forum_forum', {slug: forum.slug}) }}">{{ forum.title }}</a></div>
+                    <div class="cn-topic-category">
+                        {% if primaryTag %}
+                            <a href="{{ path('forumify_forum_forum', {slug: forum.slug}) }}" style="background-color: {{ primaryTag.color }}; color: {{ primaryTag.color|fg_color }};">{{ primaryTag.title }}</a>
+                        {% else %}
+                            <a href="{{ path('forumify_forum_forum', {slug: forum.slug}) }}">{{ forum.title }}</a>
+                        {% endif %}
+                    </div>
                     <div class="cn-topic-author">
                         {% if forum.displaySettings.showTopicAuthor %}
                             {% include '@Forumify/components/avatar.html.twig' with {user: topic.createdBy, className: 'avatar-sm'} only %}
@@ -33,6 +46,7 @@
                     <div class="cn-topic-replies">
                         {% if forum.displaySettings.showTopicStatistics %}
                             <span aria-label="Replies"><i class="ph ph-chat" aria-hidden="true"></i> {{ max(0, this.commentCount(topic) - 1)|short_number }}</span>
+                            {% if topic.pinned %}<span aria-label="Views"><i class="ph ph-eye" aria-hidden="true"></i> {{ topic.views|short_number }}</span>{% endif %}
                         {% endif %}
                     </div>
                     <div class="cn-topic-activity">

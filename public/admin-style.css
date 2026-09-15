@@ -1,0 +1,152 @@
+/*
+ * Command Net admin reskin. Loaded only by templates/Forumify/admin/base.html.twig,
+ * never through getStylesheets(), so it never reaches the frontend.
+ *
+ * The admin panel already receives the theme's CSS custom properties (theme_tags(false)
+ * still emits the generated theme-variable file, only the theme's own getStylesheets()
+ * output is skipped) - see CommandNetTheme::getThemeConfig(). This file layers typography,
+ * spacing and chrome on top of those same variables; it intentionally does not redefine
+ * colors so a user's Settings -> Themes edits keep applying to /admin exactly as they do now.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --border-radius: 4px;
+    --button-border-radius: 4px;
+}
+
+body,
+select,
+textarea,
+input {
+    font-family: var(--font-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+}
+
+h1 {
+    text-transform: uppercase;
+    letter-spacing: .02em;
+}
+
+a {
+    text-decoration: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--c-accent, var(--c-primary));
+    outline-offset: 2px;
+}
+
+/* Sidebar navigation */
+.navigation {
+    background-color: var(--c-elevation-2);
+}
+
+.navigation-brand {
+    padding: var(--spacing-2) var(--spacing-4);
+    gap: var(--spacing-2);
+}
+
+.navigation-brand .logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.navigation-brand span {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-size: 0.95rem;
+    overflow-wrap: anywhere;
+}
+
+.navigation-row,
+.navigation-section > a.btn-link,
+.navigation-section .menu a {
+    font-size: 0.875rem;
+    letter-spacing: .01em;
+    border-left: 3px solid transparent;
+}
+
+.navigation-section > a.btn-link:hover,
+.navigation-section .menu a:hover {
+    border-left-color: var(--c-accent, var(--c-primary));
+}
+
+.navigation-section .active > .btn-link,
+.navigation-section a.active,
+.navigation-section a[aria-current] {
+    color: var(--c-accent, var(--c-primary));
+    border-left-color: var(--c-accent, var(--c-primary));
+    background-color: var(--c-hover);
+}
+
+/* Buttons */
+.btn-primary,
+.btn-cta {
+    letter-spacing: .02em;
+}
+
+/* Cards, boxes, panels */
+.box,
+.card {
+    border: 1px solid var(--border-color);
+}
+
+.card-title {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: 0.95rem;
+}
+
+/* Tables (AbstractDoctrineTable list views) */
+thead th {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    font-size: 0.75rem;
+    color: var(--c-text-secondary);
+}
+
+.table-wrapper {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+}
+
+/* Form inputs, selects, tomselect, date pickers */
+select,
+textarea,
+input {
+    border-radius: 6px;
+}
+
+select:focus,
+textarea:focus,
+input:focus {
+    border-color: var(--c-accent, var(--c-primary-accent));
+}
+
+.ts-control,
+.ts-dropdown {
+    border-radius: 6px !important;
+}
+
+.ts-wrapper.multi .ts-control [data-value] {
+    background: var(--c-accent, var(--c-primary));
+    color: var(--c-accent-contrast, var(--c-primary-text));
+}
+
+/* Tabs */
+.tablist .active {
+    background-color: var(--c-hover);
+    border-bottom: 2px solid var(--c-accent, var(--c-primary));
+}

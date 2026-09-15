@@ -1,0 +1,16 @@
+{% extends '@!Forumify/admin/base.html.twig' %}
+
+{# Admin panel intentionally skips theme_tags' custom stylesheet loading (theme_tags(false)
+   in the parent template), so this is the only hook available to reskin /admin: add one
+   admin-only stylesheet on top of the unmodified upstream markup. #}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('themes/majesticdev/command-net-theme/admin-style.css') }}?v=1.0.0">
+{% endblock %}
+
+{% block navigation_brand %}
+    <div class="flex items-center navigation-brand">
+        <img class="logo" src="{{ asset('themes/majesticdev/command-net-theme/images/spearhead.png') }}" alt="">
+        <span>{{ setting('forumify.title')|default('Command Net', true) }}</span>
+    </div>
+{% endblock %}
