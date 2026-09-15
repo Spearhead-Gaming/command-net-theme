@@ -33,6 +33,13 @@
 </section>
 <section class="cn-online" aria-label="Community activity">
     {{ component('Forumify\\Admin\\OnlineUsers', {limit: 12}) }}
+    {% set inGameCount = snippet('command-net-in-game-count')|trim %}
+    {% set discordCount = snippet('command-net-discord-count')|trim %}
+    <div class="cn-online-stats">
+        {% if inGameCount %}<div class="cn-stat"><strong>{{ inGameCount }}</strong><span>In game</span></div>{% endif %}
+        <div class="cn-stat"><strong>{{ command_net_online_count() }}</strong><span>On forums</span></div>
+        {% if discordCount %}<div class="cn-stat"><strong>{{ discordCount }}</strong><span>In Discord</span></div>{% endif %}
+    </div>
 </section>
 
 {% endblock %}

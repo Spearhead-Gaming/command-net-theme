@@ -29,6 +29,7 @@
         {% block command_net_sidebar %}
             <aside class="cn-sidebar" aria-label="Community navigation">
                 <a class="cn-brand" href="{{ path('forumify_core_index') }}">
+                    <span class="cn-ribbon" aria-hidden="true">Spearhead</span>
                     {% if setting('forumify.logo') %}
                         <img src="{{ asset(setting('forumify.logo'), 'forumify.asset') }}" alt="" class="cn-patch">
                     {% else %}
@@ -59,15 +60,34 @@
                         {% block command_net_operation %}
                             {% set briefing = snippet('command-net-operation') %}
                             {% if briefing|trim %}
-                                {# snippet() returns platform-rendered/sanitized CMS markup. #}
+                                {# snippet() returns platform-rendered/sanitized CMS markup; a fully custom briefing wins over the default below. #}
                                 {{ briefing|raw }}
                             {% else %}
-                                <h2><i class="ph ph-broadcast" aria-hidden="true"></i> Command briefing</h2>
-                                <p>Plan. Coordinate. Deploy.</p>
+                                {% set nextOperation = repository('MajesticDev\\CommandNet\\Entity\\Operation').findNextUpcoming() %}
+                                {% set upcomingCount = repository('MajesticDev\\CommandNet\\Entity\\Operation').countUpcoming() %}
+                                {# Admin-editable, not polled: create these CMS snippets to fill them in, see README. #}
+                                {% set serverStatus = snippet('command-net-server-status')|trim %}
+                                <h2>
+                                    <i class="ph ph-tree-evergreen" aria-hidden="true"></i>
+                                    {{ nextOperation ? (nextOperation.title starts with 'Operation' ? nextOperation.title : 'Operation ' ~ nextOperation.title) : 'Operation briefing' }}
+                                    {% if nextOperation and nextOperation.status.value == 'in_progress' %}
+                                        <span class="cn-live"><i class="ph ph-circle-fill" aria-hidden="true"></i> Live</span>
+                                    {% endif %}
+                                </h2>
+                                <dl>
+                                    <div><dt>Community status</dt><dd><i class="ph ph-circle-fill cn-dot-online" aria-hidden="true"></i> Online {{ command_net_online_count() }}</dd></div>
+                                    <div><dt>Operations</dt><dd>{{ upcomingCount }} upcoming</dd></div>
+                                    <div><dt>Upcoming event</dt><dd>{{ nextOperation ? nextOperation.startDateTime|format_date(true) : 'None scheduled' }}</dd></div>
+                                    {% if serverStatus %}<div><dt>Server status</dt><dd>{{ serverStatus }}</dd></div>{% endif %}
+                                </dl>
                                 <a href="{{ path('forumify_forum_forum') }}">Open community forums <span aria-hidden="true">↗</span></a>
                             {% endif %}
                         {% endblock %}
                     </aside>
+                    <div class="cn-hud" aria-hidden="true">
+                        <div class="cn-compass"><span>N</span></div>
+                        <p class="cn-grid-ref">{{ snippet('command-net-grid-ref')|trim|default('AO SPEARHEAD', true) }}</p>
+                    </div>
                 </section>
             {% endblock %}
             {% block command_net_units %}

@@ -26,6 +26,8 @@
 .cn-subtitle { margin-top: 8px; font-size: 13px; letter-spacing: .45em; }
 .cn-operation { min-height: 155px; padding: 12px 16px; background: #0e140fe8; border-color: #454c3e; box-shadow: none; }
 .cn-operation h2 { font-size: 19px; color: #adb599; }
+.cn-operation dt { color: #8a9080; }
+.cn-operation dd { color: #cdcec5; }
 .cn-operation p { font-size: 13px; margin: 10px 0; }
 .cn-operation a { font-size: 13px; }
 .cn-units { grid-template-columns: repeat(5,minmax(0,1fr)); gap: 10px; margin: 10px 0 18px; }
@@ -36,7 +38,7 @@
 .cn-units small { font-size: 10px; letter-spacing: .03em; }
 .cn-units a:first-child { border-color: #b89d63; color: #d2b579; }
 .cn-section-heading { margin: 14px 0 10px; gap: 10px; }
-.cn-section-heading h1 { font-size: 21px; border-color: #929e75; }
+.cn-section-heading h1 { font-size: 21px; border-color: #929e75; color: #cdcec5; }
 .cn-filters button { font-size: 13px; padding: 8px 14px; }
 .cn-discussion-group { margin-bottom: 0; }
 .cn-group-heading { margin: 0; padding: 6px 12px; border: 1px solid #353b33; border-bottom: 0; background: #121712; }
@@ -56,7 +58,7 @@
 .cn-topic-author small, .cn-topic-activity small { font-size: 11px; }
 .cn-online { margin-top: 16px; border: 1px solid #394133; border-radius: 3px; }
 .cn-online .card { background: #1b201a; box-shadow: none; min-height: 60px; }
-.cn-online .card-title { font-size: 12px; }
+.cn-online .card-title { font-size: 12px; color: #cdcec5; }
 .cn-online .card-body { gap: 10px; }
 .cn-signoff { font-size: 10px; padding: 20px 0; letter-spacing: .2em; align-items: center; }
 .cn-signoff::after { content: ''; flex: 1; border-top: 1px solid #414938; }
@@ -151,4 +153,34 @@ body > footer { background: transparent; }
 @media(max-width:600px) {
  body { background-attachment: scroll; }
  .cn-empty { padding: 22px 18px; }
+}
+
+/* Sidebar ribbon tab above the patch. */
+.cn-brand { position: relative; }
+.cn-ribbon { position: relative; z-index: 1; margin-bottom: -10px; padding: 5px 22px 8px; background: #1d221e; border: 1px solid #b89d63; color: #d5b878; font: 700 12px var(--font-display); text-transform: uppercase; letter-spacing: .12em; clip-path: polygon(8% 0, 92% 0, 100% 55%, 92% 100%, 8% 100%, 0 55%); }
+
+/* Decorative compass/grid HUD, reserved third hero column at wide widths. */
+.cn-hud { display: none; }
+@media(min-width:1200px) {
+ .cn-hud { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; padding-top: 4px; color: #8a9080; text-align: right; }
+ .cn-compass { width: 34px; height: 34px; border: 1px solid #4a5044; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 600 11px var(--font-body); color: #b9b29a; }
+ .cn-grid-ref { margin: 0; font: 400 10px/1.4 var(--font-body); letter-spacing: .05em; max-width: 130px; }
+}
+
+/* Operation panel live badge + status dot. */
+.cn-operation h2 { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.cn-live { display: inline-flex; align-items: center; gap: 4px; font: 600 10px var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: #c0392b; }
+.cn-live i { font-size: 8px; }
+.cn-dot-online { color: #6f9c4d; font-size: 8px; }
+
+/* Online activity bar: avatar list + at-a-glance stat chips. */
+.cn-online { display: flex; align-items: center; }
+.cn-online .card { flex: 1; }
+.cn-online-stats { display: flex; gap: 24px; padding: 0 18px; flex-shrink: 0; }
+.cn-stat { text-align: center; }
+.cn-stat strong { display: block; font: 600 20px var(--font-display); color: #c5ad74; line-height: 1.1; }
+.cn-stat span { font-size: 10px; text-transform: uppercase; letter-spacing: .06em; color: #a0a49a; }
+@media(max-width:800px) {
+ .cn-online { flex-wrap: wrap; }
+ .cn-online-stats { padding: 10px 18px; }
 }
