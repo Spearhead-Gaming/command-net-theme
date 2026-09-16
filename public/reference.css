@@ -29,9 +29,9 @@
 .cn-wordmark {
     font-family: 'Anton', Impact, sans-serif;
     font-weight: 400;
-    font-size: clamp(40px,5.7vw,82px);
-    line-height: 1;
-    letter-spacing: -.035em;
+    font-size: clamp(58px,6vw,92px);
+    line-height: .92;
+    letter-spacing: -.01em;
     color: #b9b29a;
     text-shadow: 1px 2px 1px #050806;
     /* Tiled at native resolution (not stretched to fit the whole wordmark) so the fine
@@ -46,8 +46,23 @@
 @supports not (background-clip: text) {
     .cn-wordmark { background: none; }
 }
-.cn-drill { font-size: 9px; line-height: 1.8; color: #989e8f; border-color: #928260; }
-.cn-subtitle { margin-top: 8px; font-size: 13px; letter-spacing: .45em; }
+/* Layered on top of the tiled-texture fill: a second attr(data-text) copy carrying only
+   fine diagonal hatching, for subtle worn-lettering variation without a separate mask asset. */
+.cn-wordmark::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    color: transparent;
+    background: repeating-linear-gradient(102deg, rgba(255,255,255,.14) 0, rgba(255,255,255,.02) 1px, transparent 2px, transparent 6px);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: .5;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+}
+.cn-drill { font-size: 9px; line-height: 1.8; color: #989e8f; border-color: #c49840; }
+.cn-subtitle { margin-top: 10px; font-size: 17px; letter-spacing: .40em; }
 .cn-operation {
     min-height: 155px;
     padding: 12px 16px;
@@ -157,7 +172,6 @@
 }
 @media(min-width:1200px) {
  .cn-hero { grid-template-columns: minmax(0,1fr) 270px 145px; }
- .cn-wordmark { font-size: 82px; }
  .cn-drill { font-size: 9px; }
 }
 @media(min-width:801px) {

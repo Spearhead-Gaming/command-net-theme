@@ -1,4 +1,104 @@
 {% extends '@!Forumify/frontend/forum/list.html.twig' %}
-{# Keep the original forum list. The extends declaration must be on the first
-   line because Forumify's theme loader replaces that line when chaining themes.
-   This file also replaces the legacy sample during ZIP-based upgrades. #}
+
+{#
+    Restyled version of Forumify's native forum-group listing (used by both the top-level
+    /forum index and any category page's subforum list). Defined as a macro here rather than
+    a separate forum_group.html.twig override: that native template has no blocks of its own,
+    so Forumify's theme-override system - which wraps any file placed at a shadowed
+    @Forumify/... path in an implicit `{% extends '@!original' %}` - has nothing to hook a
+    full-content replacement into. Themes also don't get their own private Twig namespace the
+    way plugins do (AbstractForumifyTheme isn't a Symfony bundle), so a separate reusable
+    partial isn't reachable either. Inlining it here, where the block boundary this page does
+    provide (`body`) makes a full override possible, sidesteps both problems.
+
+    Keeps every functional piece of the original - permission-filtered forum list, ReadMarker
+    unread indicators, subforum links, last-comment lookup - just re-skinned.
+#}
+{% macro forum_group(forums, title) %}
+    {% set visibleForums = forums|filter(forum => can('view', forum)) %}
+    {% if visibleForums is not empty %}
+        {# Same Phosphor icon names the sidebar unit nav used before it switched to inline
+           custom SVGs - kept here since a generic forum listing doesn't warrant duplicating
+           that inline artwork, and these are already proven to render correctly. #}
+        {% set unitIcons = {
+            hq: 'compass', reaper: 'skull', misfit: 'spade', gambler: 'dice-five', viking: 'axe',
+        } %}
+        <div class="cn-forum-group">
+            {% if title is not null %}
+                <div class="cn-group-heading"><h2>{{ title }}</h2></div>
+            {% endif %}
+            <ul class="cn-forums">
+                {% for forum in visibleForums %}
+                    {% set link = path('forumify_forum_forum', { slug: forum.slug }) %}
+                    <li class="cn-forum-row">
+                        <i class="ph ph-{{ unitIcons[forum.slug]|default('chats-circle') }}" aria-hidden="true"></i>
+                        <div class="cn-forum-main">
+                            <div class="flex items-center gap-1">
+                                <h3><a href="{{ link }}">{{ forum.title }}</a></h3>
+                                {{ component('ReadMarker', { item: forum }) }}
+                            </div>
+                            {% if forum.content|striptags %}
+                                <div class="cn-forum-description">{{ forum.content|rich }}</div>
+                            {% endif %}
+                            {% set visibleSubforums = forum.children|filter(subforum => can('view', subforum)) %}
+                            {% if visibleSubforums is not empty %}
+                                <div class="cn-forum-subforums">
+                                    {% for subforum in visibleSubforums %}
+                                        <a href="{{ path('forumify_forum_forum', { slug: subforum.slug }) }}">
+                                            <i class="ph ph-arrow-bend-down-right" aria-hidden="true"></i> {{ subforum.title }}
+                                        </a>
+                                        {{ component('ReadMarker', { item: subforum }) }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        {% set lastComment = forum|last_comment %}
+                        {% if lastComment is not null %}
+                            {% set topic = lastComment.topic %}
+                            <div class="cn-forum-last-activity">
+                                {% include '@Forumify/components/avatar.html.twig' with { user: lastComment.createdBy } only %}
+                                <div class="flex flex-col min-w-0">
+                                    <a href="{{ path('forumify_forum_topic', { slug: topic.slug, comment: lastComment.id }) }}">{{ topic.title }}</a>
+                                    <span class="text-small">
+                                        {% set author %}
+                                            {% include '@Forumify/components/username.html.twig' with { user: lastComment.createdBy } only %}
+                                        {% endset %}
+                                        {{ 'created_by'|trans({ author: author })|raw }}
+                                    </span>
+                                    <span class="text-small">{{ lastComment.createdAt|format_date }}</span>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% block body %}
+    {{ component('Breadcrumbs', { entity: forum }) }}
+    {% if forum is not null %}
+        <div class="mb-4">
+            <h1 class="mb-0">{{ forum.title }}</h1>
+            {% if forum.content|striptags %}
+                {{ forum.content|rich }}
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if groups is not empty or ungroupedForums is not empty %}
+        <div class="forum-list">
+            {% for group in groups %}
+                {% if can('view', group) %}
+                    {{ _self.forum_group(groupedForums[group.id]|default([]), group.title) }}
+                {% endif %}
+            {% endfor %}
+            {% if ungroupedForums is not empty %}
+                {{ _self.forum_group(ungroupedForums, null) }}
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if forum is not null %}
+        {{ component('TopicList', { forum: forum }) }}
+    {% endif %}
+{% endblock %}
