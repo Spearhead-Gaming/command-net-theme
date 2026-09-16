@@ -111,6 +111,8 @@
                                 <path d="M128 58 L146 128 L128 198 L110 128 Z"/>
                             </svg>
                         </div>
+                        {% set coordinates = snippet('command-net-coordinates')|trim %}
+                        {% if coordinates %}<p class="cn-coordinates">{{ coordinates }}</p>{% endif %}
                         <p class="cn-grid-ref">{{ snippet('command-net-grid-ref')|trim|default('AO SPEARHEAD', true) }}</p>
                     </div>
                 </section>
