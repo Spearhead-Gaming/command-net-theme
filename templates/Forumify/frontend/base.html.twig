@@ -2,6 +2,10 @@
 
 {# Override this block locally to map existing forum slugs; no database writes. #}
 {% block base %}
+    {# commandnet-plugin is what this theme is designed for - it supplies the Operation
+       entity and command_net_online_count() the briefing/online-stats sections read - but
+       it's still a separate package, so its absence shouldn't be a fatal error here. #}
+    {% set commandNetPluginActive = repository('Forumify\\Plugin\\Entity\\Plugin').findOneBy({package: 'majesticdev/commandnet-plugin', active: true}) is not null %}
     {% set unitDefinitions = commandNetUnitDefinitions|default({
         hq: {label: 'HQ', subtitle: 'Command & news', icon: 'compass'},
         reaper: {label: 'Reaper', subtitle: 'Special operations', icon: 'skull'},
@@ -62,7 +66,7 @@
                             {% if briefing|trim %}
                                 {# snippet() returns platform-rendered/sanitized CMS markup; a fully custom briefing wins over the default below. #}
                                 {{ briefing|raw }}
-                            {% else %}
+                            {% elseif commandNetPluginActive %}
                                 {% set nextOperation = repository('MajesticDev\\CommandNet\\Entity\\Operation').findNextUpcoming() %}
                                 {% set upcomingCount = repository('MajesticDev\\CommandNet\\Entity\\Operation').countUpcoming() %}
                                 {# Admin-editable, not polled: create these CMS snippets to fill them in, see README. #}
@@ -80,6 +84,11 @@
                                     <div><dt>Upcoming event</dt><dd>{{ nextOperation ? nextOperation.startDateTime|format_date(true) : 'None scheduled' }}</dd></div>
                                     {% if serverStatus %}<div><dt>Server status</dt><dd>{{ serverStatus }}</dd></div>{% endif %}
                                 </dl>
+                                <a href="{{ path('forumify_forum_forum') }}">Open community forums <span aria-hidden="true">↗</span></a>
+                            {% else %}
+                                {# No commandnet-plugin and no CMS snippet - a plain fallback rather than a hard error. #}
+                                <h2><i class="ph ph-tree-evergreen" aria-hidden="true"></i> Operation briefing</h2>
+                                <p>Create a "command-net-operation" CMS snippet to fill in this panel.</p>
                                 <a href="{{ path('forumify_forum_forum') }}">Open community forums <span aria-hidden="true">↗</span></a>
                             {% endif %}
                         {% endblock %}
