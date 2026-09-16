@@ -33,7 +33,12 @@
     line-height: .92;
     letter-spacing: -.01em;
     color: #b9b29a;
-    text-shadow: 1px 2px 1px #050806;
+    /* Translucent layers (not an opaque shadow) so the shading reads as dimension on top
+       of the gold texture fill instead of a near-black silhouette blotting it out. */
+    text-shadow:
+        0 1px 0 rgba(235,229,211,.35),
+        0 2px 0 rgba(80,78,70,.40),
+        0 4px 10px rgba(0,0,0,.45);
     /* Tiled at native resolution (not stretched to fit the whole wordmark) so the fine
        grain stays crisp instead of anti-aliasing into a smooth gradient; contrast/brightness
        push the speckle toward the reference's grittier, more distressed look. */
@@ -45,21 +50,6 @@
 }
 @supports not (background-clip: text) {
     .cn-wordmark { background: none; }
-}
-/* Layered on top of the tiled-texture fill: a second attr(data-text) copy carrying only
-   fine diagonal hatching, for subtle worn-lettering variation without a separate mask asset. */
-.cn-wordmark::after {
-    content: attr(data-text);
-    position: absolute;
-    inset: 0;
-    color: transparent;
-    background: repeating-linear-gradient(102deg, rgba(255,255,255,.14) 0, rgba(255,255,255,.02) 1px, transparent 2px, transparent 6px);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: .5;
-    mix-blend-mode: overlay;
-    pointer-events: none;
 }
 .cn-drill { font-size: 9px; line-height: 1.8; color: #989e8f; border-color: #c49840; }
 .cn-subtitle { margin-top: 10px; font-size: 17px; letter-spacing: .40em; }
@@ -202,9 +192,6 @@ body > footer { background: transparent; }
  .cn-empty { padding: 22px 18px; }
 }
 
-/* Sidebar ribbon tab above the patch. */
-.cn-brand { position: relative; }
-.cn-ribbon { position: relative; z-index: 1; margin-bottom: -10px; padding: 5px 22px 8px; background: #1d221e; border: 1px solid #b89d63; color: #d5b878; font: 700 12px var(--font-display); text-transform: uppercase; letter-spacing: .12em; clip-path: polygon(8% 0, 92% 0, 100% 55%, 92% 100%, 8% 100%, 0 55%); }
 
 /* Decorative compass/grid HUD, reserved third hero column at wide widths. */
 .cn-hud { display: none; }
