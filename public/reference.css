@@ -34,7 +34,11 @@
     letter-spacing: -.035em;
     color: #b9b29a;
     text-shadow: 1px 2px 1px #050806;
-    background: url('images/texture-worn-gold.jpg') center / 420px no-repeat;
+    /* Tiled at native resolution (not stretched to fit the whole wordmark) so the fine
+       grain stays crisp instead of anti-aliasing into a smooth gradient; contrast/brightness
+       push the speckle toward the reference's grittier, more distressed look. */
+    background: url('images/texture-worn-gold.png') 0 0 / 140px repeat;
+    filter: contrast(1.6) brightness(.78) saturate(.75);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
