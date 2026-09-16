@@ -27,7 +27,7 @@ body { font-family: var(--font-body); background-color: var(--c-elevation-0); co
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
 a { color: var(--c-primary); }
 :focus-visible { outline: 2px solid var(--c-primary); outline-offset: 4px; }
-.cn-shell { min-height: 90vh; background-image: linear-gradient(90deg, #87906b06 1px, transparent 1px), linear-gradient(#87906b06 1px, transparent 1px); background-size: 64px 64px; }
+.cn-shell { min-height: 90vh; background-image: linear-gradient(90deg, #d2a54812 1px, transparent 1px), linear-gradient(#d2a54812 1px, transparent 1px); background-size: 64px 64px; }
 .cn-shell *, .cn-shell *::before, .cn-shell *::after { box-sizing: border-box; }
 .cn-skip { position: fixed; top: 8px; left: 8px; padding: 12px; background: var(--c-elevation-1); z-index: 1000; transform: translateY(-200%); }
 .cn-skip:focus { transform: none; }
@@ -71,7 +71,7 @@ a { color: var(--c-primary); }
 .cn-units { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 20px; }
 .cn-units a { display: flex; align-items: center; gap: 16px; padding: 12px 14px; border: 1px solid var(--border-color); background: var(--c-elevation-1); color: var(--c-text-primary); text-decoration: none; min-width: 0; }
 .cn-units a:hover, .cn-units a[aria-current] { border-color: var(--c-primary); box-shadow: inset 0 0 0 1px var(--c-primary); color: var(--c-primary); }
-.cn-units i { font-size: 36px; }
+.cn-units .cn-unit-icon { width: 36px; height: 36px; flex-shrink: 0; }
 .cn-units strong { display: block; font: 500 19px var(--font-display); text-transform: uppercase; color: var(--c-text-primary); }
 .cn-units small { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--c-text-secondary); }
 .cn-main { min-width: 0; min-height: 240px; }
@@ -129,7 +129,7 @@ body > footer { margin-left: var(--cn-sidebar-width); padding: 0 24px 20px; }
     .cn-table-heading, .cn-topic { grid-template-columns: minmax(0, 1fr) 130px 50px 105px; gap: 10px; }
     .cn-units { grid-template-columns: repeat(auto-fit, minmax(125px, 1fr)); }
     .cn-units a { gap: 8px; padding: 10px; }
-    .cn-units i { font-size: 26px; }
+    .cn-units .cn-unit-icon { width: 26px; height: 26px; }
 }
 @media (max-width: 800px) {
     :root { --cn-sidebar-width: 0px; }

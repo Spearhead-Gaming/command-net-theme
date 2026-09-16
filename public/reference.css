@@ -1,13 +1,18 @@
 /* Reference fidelity pass, 1.1.1. Overrides legacy saved gold without changing admin settings. */
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto+Condensed:wght@400;500;600;700&display=swap');
 :root { --font-body: 'Roboto Condensed', 'Arial Narrow', sans-serif; --cn-sidebar-width: 202px; }
-.cn-shell { --c-primary: #c5ad74; --c-primary-accent: #d7be80; --c-text-primary: #cdcec5; --c-text-secondary: #a0a49a; --border-color: #353b33; --c-elevation-0: #0e1210; --c-elevation-1: #191e1a; --c-elevation-2: #101511; background: #0e1210; }
+.cn-shell { --c-primary: #d2a548; --c-primary-accent: #8d733d; --c-text-primary: #d9d4c8; --c-text-secondary: #9a9b93; --border-color: #3a403b; --c-elevation-0: #0b0f0d; --c-elevation-1: #151a17; --c-elevation-2: #111613; background-color: #0b0f0d; }
 .cn-workspace { padding: 0 20px; max-width: 1540px; }
-.cn-sidebar { background: #141915; border-color: #30372f; }
-.cn-brand { padding: 22px 20px 18px; color: #c5c7bd; }
+.cn-sidebar {
+    background:
+        linear-gradient(180deg, rgba(11,15,13,.90), rgba(11,15,13,.94)),
+        url('images/bg-sidebar-grain.jpg') center / cover;
+    border-color: #2a2f2b;
+}
+.cn-brand { padding: 22px 20px 18px; color: #d9d4c8; }
 .cn-patch { width: 162px; height: 250px; margin: 0 0 14px; object-fit: contain; }
-.cn-brand strong { font-size: 27px; line-height: 1.13; letter-spacing: .055em; max-width: 165px; color: #c5c7bd; }
-.cn-brand > span { font-size: 11px; white-space: nowrap; letter-spacing: .025em; color: #a0a49a; }
+.cn-brand strong { font-size: 27px; line-height: 1.13; letter-spacing: .055em; max-width: 165px; color: #d9d4c8; }
+.cn-brand > span { font-size: 11px; white-space: nowrap; letter-spacing: .025em; color: #9a9b93; }
 .cn-navigation { gap: 2px; }
 .cn-navigation > a, .cn-navigation > div > .btn-link { font-size: 15px; min-height: 46px; padding-left: 22px; color: #b8bcb3; }
 .cn-navigation a[aria-current] { color: #d5b878; border-left-color: #d5b878; background: #26291f; }
@@ -18,13 +23,37 @@
 .cn-account { font-size: 12px; }
 .cn-account .btn-link { padding-top: 2px; padding-bottom: 2px; }
 .cn-hero { position: relative; isolation: isolate; grid-template-columns: minmax(0,1fr) 270px; gap: 26px; min-height: 175px; padding: 0 0 24px; }
-.cn-hero::before { content: ''; position: absolute; z-index: -1; inset: -30px -20px -8px; background: url('images/terrain-texture.png') right 36% / cover no-repeat; opacity: .6; pointer-events: none; }
+.cn-hero::before { content: ''; position: absolute; z-index: -1; inset: -30px -20px -8px; background: url('images/bg-command-topo-2048.jpg') right 36% / cover no-repeat; opacity: .6; pointer-events: none; }
 .cn-eyebrow { font-size: 10px; letter-spacing: .25em; margin: 0 0 25px; color: #929a88; }
 .cn-title-line { gap: 14px; }
-.cn-wordmark { font-family: 'Anton', Impact, sans-serif; font-weight: 400; font-size: clamp(40px,5.7vw,82px); line-height: 1; letter-spacing: -.035em; color: #b9b29a; text-shadow: 1px 2px 1px #050806; }
+.cn-wordmark {
+    font-family: 'Anton', Impact, sans-serif;
+    font-weight: 400;
+    font-size: clamp(40px,5.7vw,82px);
+    line-height: 1;
+    letter-spacing: -.035em;
+    color: #b9b29a;
+    text-shadow: 1px 2px 1px #050806;
+    background: url('images/texture-worn-gold.jpg') center / 420px no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@supports not (background-clip: text) {
+    .cn-wordmark { background: none; }
+}
 .cn-drill { font-size: 9px; line-height: 1.8; color: #989e8f; border-color: #928260; }
 .cn-subtitle { margin-top: 8px; font-size: 13px; letter-spacing: .45em; }
-.cn-operation { min-height: 155px; padding: 12px 16px; background: #0e140fe8; border-color: #454c3e; box-shadow: none; }
+.cn-operation {
+    min-height: 155px;
+    padding: 12px 16px;
+    background:
+        linear-gradient(180deg, rgba(21,26,23,.94), rgba(14,20,15,.94)),
+        url('images/overlay-micro-noise.png');
+    background-blend-mode: normal, overlay;
+    border-color: #454c3e;
+    box-shadow: none;
+}
 .cn-operation h2, .cn-operation h3 { font-size: 19px; color: #adb599; }
 .cn-operation dt { color: #8a9080; }
 .cn-operation dd { color: #cdcec5; }
@@ -33,7 +62,7 @@
 .cn-units { grid-template-columns: repeat(5,minmax(0,1fr)); gap: 10px; margin: 10px 0 18px; }
 .cn-units a, .cn-unit-unavailable { display: flex; align-items: center; gap: 15px; min-width: 0; height: 67px; padding: 10px 14px; background: #1d221e; border: 1px solid #4a5044; color: #bfc3b8; text-decoration: none; }
 .cn-unit-unavailable { opacity: .68; cursor: not-allowed; }
-.cn-units i { font-size: 38px; flex-shrink: 0; }
+.cn-units .cn-unit-icon { width: 38px; height: 38px; flex-shrink: 0; }
 .cn-units strong { font-size: 18px; color: #bfc3b8; }
 .cn-units small { font-size: 10px; letter-spacing: .03em; }
 .cn-units a:first-child { border-color: #b89d63; color: #d2b579; }
@@ -71,7 +100,7 @@
  .cn-hero { grid-template-columns: minmax(0,1fr) 220px; gap: 16px; }
  .cn-wordmark { font-size: 5.2vw; }
  .cn-units a, .cn-unit-unavailable { padding: 10px 8px; gap: 7px; }
- .cn-units i { font-size: 28px; }
+ .cn-units .cn-unit-icon { width: 28px; height: 28px; }
  .cn-units strong { font-size: 16px; }
  .cn-units small { font-size: 9px; }
 }
@@ -135,14 +164,14 @@
 
 /* Continuous terrain backdrop, including the native footer. */
 body {
- background-color: #0e1210;
- background-image: linear-gradient(#0e121030, #0e121060), url('images/terrain-texture.png');
- background-position: right top;
+ background-color: #0b0f0d;
+ background-image: linear-gradient(rgba(8,11,9,.84), rgba(8,11,9,.84)), url('images/bg-command-topo-2048.jpg');
+ background-position: center top;
  background-size: cover;
  background-repeat: no-repeat;
  background-attachment: fixed;
 }
-.cn-shell { background: transparent; }
+.cn-shell { background-color: transparent; }
 .cn-hero::before { content: none; }
 body > footer { background: transparent; }
 .cn-workspace { max-width: none; padding-bottom: 24px; }
@@ -163,7 +192,8 @@ body > footer { background: transparent; }
 .cn-hud { display: none; }
 @media(min-width:1200px) {
  .cn-hud { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; padding-top: 4px; color: #8a9080; text-align: right; }
- .cn-compass { width: 34px; height: 34px; border: 1px solid #4a5044; border-radius: 50%; display: flex; align-items: center; justify-content: center; font: 600 11px var(--font-body); color: #b9b29a; }
+ .cn-compass { width: 34px; height: 34px; border: 1px solid #4a5044; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #b9b29a; }
+ .cn-compass svg { width: 18px; height: 18px; }
  .cn-grid-ref { margin: 0; font: 400 10px/1.4 var(--font-body); letter-spacing: .05em; max-width: 130px; }
 }
 
