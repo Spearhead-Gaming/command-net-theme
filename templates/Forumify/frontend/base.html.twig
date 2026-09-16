@@ -7,12 +7,22 @@
        it's still a separate package, so its absence shouldn't be a fatal error here. #}
     {% set commandNetPluginActive = repository('Forumify\\Plugin\\Entity\\Plugin').findOneBy({package: 'majesticdev/commandnet-plugin', active: true}) is not null %}
     {% set unitDefinitions = commandNetUnitDefinitions|default({
-        hq: {label: 'HQ', subtitle: 'Command & news', icon: 'compass'},
-        reaper: {label: 'Reaper', subtitle: 'Special operations', icon: 'skull'},
-        misfit: {label: 'Misfit', subtitle: 'Recon & scouting', icon: 'spade'},
-        gambler: {label: 'Gambler', subtitle: 'Aviation', icon: 'dice-five'},
-        viking: {label: 'Viking', subtitle: 'Infantry', icon: 'axe'}
+        hq: {label: 'HQ', subtitle: 'Command & news', icon: 'hq-spearhead'},
+        reaper: {label: 'Reaper', subtitle: 'Special operations', icon: 'reaper-skull'},
+        misfit: {label: 'Misfit', subtitle: 'Recon & scouting', icon: 'misfit-spade'},
+        gambler: {label: 'Gambler', subtitle: 'Aviation', icon: 'gambler-dice'},
+        viking: {label: 'Viking', subtitle: 'Infantry', icon: 'viking-axe'}
     }) %}
+    {# Inlined (not <img src>) so stroke="currentColor" actually picks up the hover/active
+       gold tint set on the parent link - an externally-referenced <img> SVG can't see the
+       page's CSS color. Source files kept at public/images/icons/units/ for reference. #}
+    {% set unitIconPaths = {
+        'hq-spearhead': '<path d="M128 28 L188 214 L128 178 L68 214 Z"/><path d="M128 60 L128 180"/><path d="M94 152 L128 126 L162 152"/>',
+        'reaper-skull': '<path d="M64 108 C64 64 92 38 128 38 C164 38 192 64 192 108 C192 140 178 158 160 170 L154 208 L132 194 L112 208 L100 170 C82 158 64 140 64 108 Z"/><circle cx="100" cy="112" r="18"/><circle cx="156" cy="112" r="18"/><path d="M128 128 L118 152 L138 152 Z"/><path d="M104 172 L152 172"/>',
+        'misfit-spade': '<path d="M128 34 C108 66 64 92 64 128 C64 156 86 172 110 164 C100 190 90 205 76 220 L180 220 C166 205 156 190 146 164 C170 172 192 156 192 128 C192 92 148 66 128 34 Z"/>',
+        'gambler-dice': '<rect x="42" y="74" width="88" height="88" rx="8" transform="rotate(-18 86 118)"/><rect x="126" y="82" width="88" height="88" rx="8" transform="rotate(18 170 126)"/><circle cx="72" cy="100" r="5" fill="currentColor"/><circle cx="100" cy="136" r="5" fill="currentColor"/><circle cx="154" cy="110" r="5" fill="currentColor"/><circle cx="184" cy="144" r="5" fill="currentColor"/>',
+        'viking-axe': '<path d="M88 214 L162 52"/><path d="M142 56 C172 42 196 46 214 58 C198 82 178 98 150 100"/><path d="M158 98 C176 118 186 138 182 160 C160 154 144 142 130 122"/>',
+    } %}
     {% set commandNetForums = [] %}
     {% for unitForum in repository('Forumify\\Forum\\Entity\\Forum').findBy({slug: unitDefinitions|keys}, {position: 'ASC'}) %}
         {% if can('view', unitForum) %}
@@ -94,7 +104,13 @@
                         {% endblock %}
                     </aside>
                     <div class="cn-hud" aria-hidden="true">
-                        <div class="cn-compass"><span>N</span></div>
+                        <div class="cn-compass">
+                            <svg viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="128" cy="128" r="74"/>
+                                <path d="M128 30 V226 M30 128 H226"/>
+                                <path d="M128 58 L146 128 L128 198 L110 128 Z"/>
+                            </svg>
+                        </div>
                         <p class="cn-grid-ref">{{ snippet('command-net-grid-ref')|trim|default('AO SPEARHEAD', true) }}</p>
                     </div>
                 </section>
@@ -104,14 +120,17 @@
                     {% for slug, unit in unitDefinitions %}
                         {% set matches = commandNetUnitForums|filter(f => f.slug == slug) %}
                         {% set unitForum = matches|first %}
+                        {% set iconMarkup = unitIconPaths[unit.icon] is defined
+                            ? '<svg class="cn-unit-icon" viewBox="0 0 256 256" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' ~ unitIconPaths[unit.icon] ~ '</svg>'
+                            : '<i class="ph ph-' ~ unit.icon ~ '" aria-hidden="true"></i>' %}
                         {% if unitForum %}
                             <a href="{{ path('forumify_forum_forum', {slug: unitForum.slug}) }}" {% if forum is defined and forum is not null and forum.id == unitForum.id %}aria-current="page"{% endif %}>
-                                <i class="ph ph-{{ unit.icon }}" aria-hidden="true"></i>
+                                {{ iconMarkup|raw }}
                                 <span><strong>{{ unit.label }}</strong><small>{{ unit.subtitle }}</small></span>
                             </a>
                         {% else %}
                             <span class="cn-unit-unavailable" aria-disabled="true" title="Channel unavailable">
-                                <i class="ph ph-{{ unit.icon }}" aria-hidden="true"></i>
+                                {{ iconMarkup|raw }}
                                 <span><strong>{{ unit.label }}</strong><small>{{ unit.subtitle }}</small></span>
                             </span>
                         {% endif %}

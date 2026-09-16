@@ -1,0 +1,78 @@
+:root {
+  --cn-bg-0: #0b0f0d;
+  --cn-bg-1: #111613;
+  --cn-bg-2: #171c18;
+  --cn-panel: #151a17;
+  --cn-panel-raised: #1b211d;
+  --cn-line: #3a403b;
+  --cn-line-soft: #2a2f2b;
+  --cn-text: #d9d4c8;
+  --cn-text-muted: #9a9b93;
+  --cn-gold: #d2a548;
+  --cn-gold-dim: #8d733d;
+  --cn-olive: #68705a;
+  --cn-green: #55ca6a;
+  --cn-red: #ef4d43;
+
+  --cn-sidebar-width: 232px;
+  --cn-content-pad: 20px;
+  --cn-radius-sm: 4px;
+  --cn-radius-md: 7px;
+  --cn-border: 1px solid rgba(145,151,143,.30);
+  --cn-shadow-inset: inset 0 1px 0 rgba(255,255,255,.025);
+}
+
+body {
+  background:
+    linear-gradient(rgba(8,11,9,.84),rgba(8,11,9,.84)),
+    url("../assets/backgrounds/bg-command-topo-2048.png") center top / cover fixed,
+    var(--cn-bg-0);
+  color: var(--cn-text);
+}
+
+.cn-panel {
+  background: linear-gradient(180deg,rgba(25,30,27,.96),rgba(17,21,19,.96));
+  border: var(--cn-border);
+  border-radius: var(--cn-radius-md);
+  box-shadow: var(--cn-shadow-inset);
+}
+
+.cn-tab {
+  min-height: 76px;
+  border: 1px solid rgba(130,136,128,.35);
+  background: rgba(22,27,24,.86);
+  text-transform: uppercase;
+}
+
+.cn-tab:hover {
+  border-color: rgba(210,165,72,.55);
+  background: rgba(35,35,27,.92);
+}
+
+.cn-tab.is-active {
+  border: 2px solid var(--cn-gold);
+  background:
+    linear-gradient(90deg,rgba(210,165,72,.12),transparent 55%),
+    rgba(28,30,24,.92);
+}
+
+.cn-category-pill {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:82px;
+  height:25px;
+  padding:0 12px;
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:4px;
+  background:#303530;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+.cn-status-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:var(--cn-green);
+  box-shadow:0 0 10px color-mix(in srgb,var(--cn-green) 45%,transparent);
+}
