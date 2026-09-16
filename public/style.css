@@ -22,16 +22,37 @@
     --border-radius: 3px;
     --button-border-radius: 3px;
     --cn-sidebar-width: 212px;
+
+    /* Spacing scale - referenced by name instead of scattering magic numbers through
+       component rules. Existing hand-tuned paddings/margins are left as-is; this is for
+       new/changed rules going forward. */
+    --cn-space-1: 4px;
+    --cn-space-2: 8px;
+    --cn-space-3: 12px;
+    --cn-space-4: 16px;
+    --cn-space-5: 24px;
+    --cn-space-6: 32px;
+
+    --cn-transition: 150ms ease;
+
+    /* z-index layers, named rather than ad-hoc per component */
+    --cn-z-sidebar: 20;
+    --cn-z-dropdown: 50;
+    --cn-z-overlay: 1000;
 }
 body { font-family: var(--font-body); background-color: var(--c-elevation-0); color: var(--c-text-primary); }
 h1, h2, h3, h4, h5, h6 { font-family: var(--font-display); }
 a { color: var(--c-primary); }
 :focus-visible { outline: 2px solid var(--c-primary); outline-offset: 4px; }
+input[type="checkbox"], input[type="radio"] { accent-color: var(--c-primary); }
+@media (prefers-reduced-motion: no-preference) {
+    a, button, input, select, textarea { transition: border-color var(--cn-transition), background-color var(--cn-transition), color var(--cn-transition); }
+}
 .cn-shell { min-height: 90vh; background-image: linear-gradient(90deg, #d2a54812 1px, transparent 1px), linear-gradient(#d2a54812 1px, transparent 1px); background-size: 64px 64px; }
 .cn-shell *, .cn-shell *::before, .cn-shell *::after { box-sizing: border-box; }
 .cn-skip { position: fixed; top: 8px; left: 8px; padding: 12px; background: var(--c-elevation-1); z-index: 1000; transform: translateY(-200%); }
 .cn-skip:focus { transform: none; }
-.cn-sidebar { position: fixed; inset: 0 auto 0 0; width: var(--cn-sidebar-width); overflow-y: auto; background: var(--c-elevation-2); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: 20; }
+.cn-sidebar { position: fixed; inset: 0 auto 0 0; width: var(--cn-sidebar-width); overflow-y: auto; background: var(--c-elevation-2); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; z-index: var(--cn-z-sidebar); }
 .cn-brand { display: flex; flex-direction: column; align-items: center; padding: 24px 18px; text-decoration: none; color: var(--c-text-primary); }
 .cn-patch { width: 100%; height: 220px; object-fit: contain; margin-bottom: 18px; }
 .cn-brand-mark { font-size: 120px; color: var(--c-primary); margin: 22px 0; }
@@ -52,7 +73,7 @@ a { color: var(--c-primary); }
 .cn-mobile-brand { display: none; }
 .cn-account { gap: 5px; }
 .cn-account .btn-link { gap: 8px; }
-.cn-account .menu { z-index: 50; }
+.cn-account .menu { z-index: var(--cn-z-dropdown); }
 .cn-hero { display: grid; grid-template-columns: minmax(0, 1fr) 265px; gap: 22px; align-items: center; padding: 26px 0 30px; }
 .cn-heading { min-width: 0; }
 .cn-eyebrow { font-size: 11px; letter-spacing: .3em; text-transform: uppercase; color: var(--c-text-secondary); margin: 0 0 20px; }

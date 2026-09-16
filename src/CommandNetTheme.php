@@ -338,13 +338,15 @@ class CommandNetTheme extends AbstractForumifyTheme
                     key: 'border-radius',
                     label: 'Border Radius',
                     type: ThemeVarType::Size,
-                    defaultValue: '10px',
+                    // A tactical UI reads as restrained, not "SaaS" - kept tight (2-5px)
+                    // rather than Forumify's own rounder 10px default.
+                    defaultValue: '4px',
                 ),
                 new ThemeVar(
                     key: 'button-border-radius',
                     label: 'Button Border Radius',
                     type: ThemeVarType::Size,
-                    defaultValue: '10px',
+                    defaultValue: '3px',
                 ),
                 new ThemeVar(
                     key: 'font-size',
