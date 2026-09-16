@@ -64,10 +64,12 @@
             {% include '@Forumify/frontend/blocks/header/header.html.twig' %}
             {% include '@Forumify/frontend/blocks/alerts.html.twig' %}
             {% block command_net_hero %}
+                {% set commandTitle = commandTitle|default('Command Net') %}
+                {% set communityTagline = communityTagline|default('Ordinary players. Extraordinary brotherhood.') %}
                 <section class="cn-hero" aria-label="Command Net">
                     <div class="cn-heading">
-                        <p class="cn-eyebrow">Ordinary players. Extraordinary brotherhood.</p>
-                        <div class="cn-title-line"><p class="cn-wordmark">Command Net</p><span class="cn-drill" aria-hidden="true">Plan<br>Coordinate<br>Deploy<br>Play<br>Repeat</span></div>
+                        <p class="cn-eyebrow">{{ communityTagline }}</p>
+                        <div class="cn-title-line"><p class="cn-wordmark" data-text="{{ commandTitle }}">{{ commandTitle }}</p><span class="cn-drill" aria-hidden="true">Plan<br>Coordinate<br>Deploy<br>Play<br>Repeat</span></div>
                         <p class="cn-subtitle">{{ setting('forumify.title')|default('Spearhead Gaming', true) }}</p>
                     </div>
                     <aside class="cn-operation" aria-label="Operations briefing">
