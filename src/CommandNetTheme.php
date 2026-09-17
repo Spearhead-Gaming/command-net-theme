@@ -11,7 +11,8 @@ use Forumify\Plugin\ThemeVarType;
 /**
  * "Command Net" — a dark tactical/military-ops theme for forumify.
  *
- * Version 1.1.0: native frontend shell and permission-aware dashboard.
+ * Version 1.1.2: native frontend shell, permission-aware dashboard, single consolidated
+ * stylesheet with working light/dark modes, and a restyled forum listing.
  */
 class CommandNetTheme extends AbstractForumifyTheme
 {
