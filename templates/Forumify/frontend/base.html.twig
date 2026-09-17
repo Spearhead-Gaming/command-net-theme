@@ -90,7 +90,7 @@
                                     {% endif %}
                                 </h2>
                                 <dl>
-                                    <div><dt>Community status</dt><dd><i class="ph ph-circle-fill cn-dot-online" aria-hidden="true"></i> Online {{ command_net_online_count() }}</dd></div>
+                                    <div><dt>Community status</dt><dd><i class="ph ph-circle-fill cn-dot-online" aria-hidden="true"></i> Online {% include '@CommandNetPlugin/frontend/online_count.html.twig' ignore missing %}</dd></div>
                                     <div><dt>Operations</dt><dd>{{ upcomingCount }} upcoming</dd></div>
                                     <div><dt>Upcoming event</dt><dd>{{ nextOperation ? nextOperation.startDateTime|format_date(true) : 'None scheduled' }}</dd></div>
                                     {% if serverStatus %}<div><dt>Server status</dt><dd>{{ serverStatus }}</dd></div>{% endif %}

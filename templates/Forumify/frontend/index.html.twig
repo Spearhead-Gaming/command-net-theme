@@ -38,7 +38,12 @@
     <div class="cn-online-stats">
         {% if inGameCount %}<div class="cn-stat"><strong>{{ inGameCount }}</strong><span>In game</span></div>{% endif %}
         {% if commandNetPluginActive %}
-            <div class="cn-stat"><strong>{{ command_net_online_count() }}</strong><span>On forums</span></div>
+            {# See templates/frontend/online_count.html.twig in commandnet-plugin: calling
+               command_net_online_count() directly here would fail Twig's compile-time
+               function lookup whenever that plugin isn't installed at all - this `ignore
+               missing` include is what actually makes the plugin optional, not the `if`
+               above (which only skips execution, not compilation). #}
+            <div class="cn-stat"><strong>{% include '@CommandNetPlugin/frontend/online_count.html.twig' ignore missing %}</strong><span>On forums</span></div>
         {% endif %}
         {% if discordCount %}<div class="cn-stat"><strong>{{ discordCount }}</strong><span>In Discord</span></div>{% endif %}
     </div>

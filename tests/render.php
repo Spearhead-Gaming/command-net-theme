@@ -68,6 +68,9 @@ $repository = new class($forums) {
     public array $forums;
     public function __construct(array $forums) { $this->forums = $forums; }
     public function findBy(array $criteria, array $order): array { return array_values(array_filter($this->forums, fn ($f) => (!isset($criteria['slug']) || in_array($f->slug, $criteria['slug'], true)))); }
+    // commandNetPluginActive queries the Plugin entity this way; this suite never installs
+    // that plugin, so it should behave exactly as it does when the package is really absent.
+    public function findOneBy(array $criteria): ?object { return null; }
 };
 $functions = [
     'setting' => static fn ($name) => $settings[$name] ?? null,
@@ -92,12 +95,22 @@ $functions = [
     'forum_menu' => static fn () => '<a href="/events">Events</a><a href="/resources">Resources</a>',
     'encore_entry_link_tags' => static fn ($name) => '<link rel="stylesheet" href="/native.css">',
     'encore_entry_script_tags' => static fn ($name) => '<!-- native scripts retained -->',
-    'theme_tags' => static fn () => '<link rel="stylesheet" href="/theme-vars.css"><link rel="stylesheet" href="/themes/majesticdev/command-net-theme/style.css"><link rel="stylesheet" href="/themes/majesticdev/command-net-theme/reference.css">',
+    'theme_tags' => static fn () => '<link rel="stylesheet" href="/theme-vars.css"><link rel="stylesheet" href="/themes/majesticdev/command-net-theme/style.css">',
 ];
 foreach ($functions as $name => $function) $twig->addFunction(new TwigFunction($name, $function, ['is_safe' => ['html']]));
 foreach (['imagine_filter', 'short_number', 'rich'] as $filter) $twig->addFilter(new TwigFilter($filter, static fn ($v, ...$args) => $v));
 $twig->addFilter(new TwigFilter('trans', static fn ($v, ...$args) => ['login' => 'Sign in', 'toggle_theme' => 'Toggle theme', 'privacy_policy.title' => 'Privacy policy', 'forum.topic.view_all' => 'View all'][$v] ?? $v));
 $twig->addFilter(new TwigFilter('role_color', static fn ($v) => null));
+// Mirrors Forumify\Core\Twig\Extension\CoreExtension::foregroundColor(), used by the
+// theme's topic_list.html.twig override for tag-colored category labels.
+$twig->addFilter(new TwigFilter('fg_color', static function (string $hex): string {
+    $hex = substr($hex, 1);
+    $r = hexdec(substr($hex, 0, 2)) / 255;
+    $g = hexdec(substr($hex, 2, 2)) / 255;
+    $b = hexdec(substr($hex, 4, 2)) / 255;
+    $l = (max($r, $g, $b) + min($r, $g, $b)) / 2;
+    return $l < 0.4 ? 'white' : 'black';
+}));
 $twig->addFilter(new TwigFilter('format_date', static fn ($v) => $v->format('M j, H:i')));
 $twig->addFilter(new TwigFilter('last_comment', static fn ($v) => $v->firstComment));
 $twig->addFunction(new TwigFunction('component', static function ($name, $props = []) use ($twig, $fixtureUser, $attributes, &$calls, &$emptyTopics): string {
@@ -111,7 +124,7 @@ $twig->addFunction(new TwigFunction('component', static function ($name, $props 
     if ($name !== 'TopicList') return '';
     $forum = $props['forum'];
     $comment = (object)['createdBy' => $fixtureUser, 'createdAt' => new DateTimeImmutable('2026-09-14 10:00'), 'content' => '<p>Fixture preview &lt;script&gt; must stay text.</p>'];
-    $topic = (object)['slug' => 'fixture-' . $forum->slug, 'title' => 'Fixture discussion for ' . $forum->title, 'pinned' => $forum->slug === 'hq', 'hidden' => false, 'locked' => true, 'tags' => [], 'createdBy' => $fixtureUser, 'createdAt' => $comment->createdAt, 'firstComment' => $comment];
+    $topic = (object)['slug' => 'fixture-' . $forum->slug, 'title' => 'Fixture discussion for ' . $forum->title, 'pinned' => $forum->slug === 'hq', 'hidden' => false, 'locked' => true, 'tags' => [], 'views' => 42, 'createdBy' => $fixtureUser, 'createdAt' => $comment->createdAt, 'firstComment' => $comment];
     $component = new class {
         public bool $showControls = false;
         public bool $lastPageFirst = false;
