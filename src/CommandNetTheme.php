@@ -29,7 +29,7 @@ class CommandNetTheme extends AbstractForumifyTheme
      */
     public function getStylesheets(): array
     {
-        return ['style.css', 'reference.css'];
+        return ['style.css'];
     }
 
     /**
