@@ -1,12 +1,12 @@
-# Reference fidelity update � v1.1.1
+# Reference fidelity update — v1.1.2
 
 This update includes the original Spearhead patch, a generated decorative terrain texture, subdued condensed heading, tighter sidebar/header/unit proportions, and compact category-labelled discussion rows. Pinned rows appear above the discussion heading through CSS ordering; the native component DOM and query rules stay intact. All displays forum sections in admin order, not a globally sorted feed.
 
-Install all files, including public/style.css and public/images/, and run plugin refresh and cache clear. This is prepared source; v1.1.1 has not been tagged or published. The existing v1.1.0 tag is unchanged.
+Install all files, including public/style.css and public/images/, and run plugin refresh and cache clear. The existing v1.1.0 tag is unchanged.
 
 The reference's fixed event, online/game/Discord counts and extra destinations are not invented. Populate your CMS operation snippet and Menu Builder with real content. Source artwork stays unchanged; the heading font and map texture are approximations, not exact pixel copies. The reference palette is intentionally applied within the command shell regardless of prior saved accent colors.
 
-# Command Net — v1.1.1
+# Command Net — v1.1.2
 
 A native Forumify theme for Spearhead Gaming. Requires **PHP 8.4+ and Forumify ^1.3.1**. Template compatibility was checked against upstream tag `1.3.1`, commit `9b6947123513fa8b420c90f4d4d6b83f6cc9b19c`.
 
@@ -23,7 +23,7 @@ The mockup's patch is not bundled as a cropped screenshot. Upload the original p
 
 ## Install or upgrade
 
-After the reviewed implementation is published as the stable **v1.1.1 Git tag**, run in the Forumify application directory:
+After the reviewed implementation is published as the stable **v1.1.2 Git tag**, run in the Forumify application directory:
 
 ```sh
 composer require majesticdev/command-net-theme:^1.1 --with-all-dependencies
@@ -118,7 +118,7 @@ Local browser checks use rendered fixtures with the actual upstream stylesheet. 
 
 ### Staging release gate
 
-Before publishing v1.1.1:
+Before publishing v1.1.2:
 
 1. Refresh/activate the theme and verify assets and overrides load.
 2. Check guest/member/moderator views. Private units must be absent for unauthorized accounts; verify own-topic-only forums with two accounts.
@@ -130,7 +130,7 @@ There was no running Forumify application/database in this workspace. These inst
 
 ## Publish and rollback
 
-After staging passes, merge the reviewed changes and create an annotated `v1.1.1` tag at that commit. Publish the release and refresh the Composer package index. Do not add a composer.json version field or retag v1.0.0.
+After staging passes, merge the reviewed changes and create an annotated `v1.1.2` tag at that commit. Publish the release and refresh the Composer package index. Do not add a composer.json version field or retag v1.0.0 or v1.1.0.
 
 To roll back, select the prior theme or reinstall the previous stable version, refresh plugins and clear cache. No community data is migrated or removed.
 
