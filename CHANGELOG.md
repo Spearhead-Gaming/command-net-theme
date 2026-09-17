@@ -6,11 +6,20 @@
   light/dark toggle. ThemeService generates the site's CSS from whichever theme is
   *active*, without falling back to the base Forumify Theme's variables - so a theme
   that only defines its own bespoke vars (as this one did) leaves every surface that
-  isn't explicitly reskinned by style.css/reference.css (most notably the whole admin
+  isn't explicitly reskinned by style.css (most notably the whole admin
   panel, which intentionally excludes a theme's custom stylesheets) without a color
   scheme at all. Filled in the full set of variables Forumify\ForumifyTheme ships
   (c-primary, c-elevation-0..5, border-*, etc.) using this theme's own tactical
   palette, so admin gets a matching dark/light scheme with no core template changes.
+- Consolidated `public/reference.css` into `public/style.css` and removed
+  reference.css entirely; the theme now ships a single stylesheet. Replaced
+  hardcoded/stale hex colors throughout with the existing `--c-*` custom
+  properties so admin-configured theme colors actually propagate to every
+  surface (sidebar nav, unit nav, section headings, filter tabs, status
+  colors) instead of only the surfaces reference.css didn't touch. Also
+  reconciled three sets of overlapping responsive breakpoints (two separate
+  ~1100px rules, plus duplicate 800px/600px rules) that previously produced
+  conflicting cascade behavior into one block per breakpoint.
 
 ## 1.1.1
 

@@ -2,7 +2,7 @@
 
 This update includes the original Spearhead patch, a generated decorative terrain texture, subdued condensed heading, tighter sidebar/header/unit proportions, and compact category-labelled discussion rows. Pinned rows appear above the discussion heading through CSS ordering; the native component DOM and query rules stay intact. All displays forum sections in admin order, not a globally sorted feed.
 
-Install all files, including public/reference.css and public/images/, and run plugin refresh and cache clear. This is prepared source; v1.1.1 has not been tagged or published. The existing v1.1.0 tag is unchanged.
+Install all files, including public/style.css and public/images/, and run plugin refresh and cache clear. This is prepared source; v1.1.1 has not been tagged or published. The existing v1.1.0 tag is unchanged.
 
 The reference's fixed event, online/game/Discord counts and extra destinations are not invented. Populate your CMS operation snippet and Menu Builder with real content. Source artwork stays unchanged; the heading font and map texture are approximations, not exact pixel copies. The reference palette is intentionally applied within the command shell regardless of prior saved accent colors.
 
@@ -31,7 +31,7 @@ php bin/console forumify:plugins:refresh
 php bin/console cache:clear
 ```
 
-Activate Command Net in admin theme settings. Refresh copies `public/` into `public/themes/majesticdev/command-net-theme/`. Confirm `style.css`, `reference.css`, and `command-net.js` load. Clear a reverse-proxy/browser cache if an old stylesheet remains. Existing admin color overrides remain configured; optionally reset them to use the revised default gold/muted text.
+Activate Command Net in admin theme settings. Refresh copies `public/` into `public/themes/majesticdev/command-net-theme/`. Confirm `style.css` and `command-net.js` load. Clear a reverse-proxy/browser cache if an old stylesheet remains. Existing admin color overrides remain configured; optionally reset them to use the revised default gold/muted text.
 
 The `1.1.x-dev` alias is not a stable release. Do not lower application minimum stability. Before publication, install the branch through a Composer path repository on staging, using an explicit development constraint scoped to this package. A source ZIP alone does not register a theme: use Composer and plugin refresh.
 
@@ -94,7 +94,8 @@ The "Category" column and each row's icon now come from the topic's first Forum 
 | `templates/Forumify/frontend/blocks/header/header.html.twig` | Account, notifications and theme toolbar |
 | `templates/Forumify/frontend/index.html.twig` | Default dashboard, filters and online activity |
 | `templates/Forumify/frontend/components/topic_list.html.twig` | Compact widget rows; parent output for normal forum lists |
-| `public/style.css` | Native variable mapping and responsive styles |
+| `templates/Forumify/frontend/forum/list.html.twig` | Restyled forum-group listing (category index and subforum lists) |
+| `public/style.css` | All theme styles: native variable mapping, layout and responsive rules |
 | `public/command-net.js` | Progressive filtering and active sidebar links |
 
 Only templates with existing upstream parents are overridden. Forumify automatically constructs the inheritance chain; new partial templates in this namespace can fail if an original does not exist. The legacy forum-list file is retained as a first-line extends-only replacement to support ZIP upgrades.
