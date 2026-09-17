@@ -11,6 +11,16 @@
   scheme at all. Filled in the full set of variables Forumify\ForumifyTheme ships
   (c-primary, c-elevation-0..5, border-*, etc.) using this theme's own tactical
   palette, so admin gets a matching dark/light scheme with no core template changes.
+- Fix: light mode was broken. The body, sidebar and operation-briefing panel
+  each layer a background image under a solid tint for legibility, but that
+  tint was hardcoded to near-black regardless of which mode was active - so
+  switching to light mode (this theme follows the OS `prefers-color-scheme`,
+  there's no manual toggle) left those three areas black while every other
+  panel correctly turned light cream/white. The tints now derive from the
+  same `--c-elevation-*` vars the rest of the theme uses
+  (`color-mix(in srgb, var(--c-elevation-0) 84%, transparent)` etc.), so they
+  follow the active mode automatically. Verified both modes render correctly
+  on the homepage and forum listing; dark mode is pixel-identical to before.
 - Consolidated `public/reference.css` into `public/style.css` and removed
   reference.css entirely; the theme now ships a single stylesheet. Replaced
   hardcoded/stale hex colors throughout with the existing `--c-*` custom
