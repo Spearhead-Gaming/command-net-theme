@@ -78,9 +78,9 @@ The "online now" bar's "On forums" number is the same live count as above. To al
 
 Home and Forums are built in. Everything else — Unit Channels, Events, Media, Resources, Members, Store, or any installed plugin's own pages — is Forumify's native **Menu Builder** (Settings → Menu in admin), rendered automatically by the existing `forum_menu()` call. A menu item's "Route" type can target any named route, including this plugin's own `command_net_roster` (Members) or `forumify_cms_page` with a `urlKey` parameter (for a CMS page you've created). No theme code is involved in adding these.
 
-### Sidebar ribbon and grid HUD
+### Grid HUD
 
-The "Spearhead" ribbon above the sidebar patch is static branding, matching the hardcoded "Command Net" wordmark elsewhere. The decorative grid-reference text in the top-right HUD (visible at wide/desktop widths) defaults to "AO SPEARHEAD" but can be overridden with a plain-text CMS snippet slug **`command-net-grid-ref`** — purely cosmetic, not a real coordinate.
+The decorative grid-reference text in the top-right HUD (visible at wide/desktop widths) defaults to "AO SPEARHEAD" but can be overridden with a plain-text CMS snippet slug **`command-net-grid-ref`** — purely cosmetic, not a real coordinate.
 
 ### Discussion category tags
 
