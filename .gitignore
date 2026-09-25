@@ -1,5 +1,6 @@
 /tests/vendor/
 /tests/composer.lock
+/dev-credentials.local.md
 
 # Auto-saved from pasted chat images - reference material only, never shipped (see spec
 # section 29 in the design conversation: the mockup screenshot itself must not become a
