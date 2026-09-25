@@ -47,7 +47,7 @@ refresh (and clear cache) rather than assuming the edit was wrong.
 bin/console forumify:plugins:refresh
 bin/console cache:clear
 ```
-Then activate **Command Net** in admin theme settings if not already active.
+Then activate **Command Net Theme** in admin theme settings if not already active.
 
 ## Testing
 
