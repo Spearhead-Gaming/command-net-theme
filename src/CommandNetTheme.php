@@ -19,8 +19,8 @@ class CommandNetTheme extends AbstractForumifyTheme
     public function getPluginMetadata(): PluginMetadata
     {
         return new PluginMetadata(
-            'Command Net',
-            'Spearhead Gaming',
+            'Command Net Theme',
+            'MajesticDev',
             'Command Net community dashboard with native Forumify navigation, unit channels, discussions and account controls.'
         );
     }
