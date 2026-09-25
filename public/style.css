@@ -1,4 +1,4 @@
-/* Command Net 1.2.1. Native Forumify assets load first. Single stylesheet: reference.css
+/* Command Net 1.2.2. Native Forumify assets load first. Single stylesheet: reference.css
    was merged in here (see CHANGELOG) so admin-configured colors reach every selector
    instead of stopping at whichever file happened to load first. */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Black+Ops+One&family=Roboto+Condensed:wght@400;500;600;700&display=swap');
