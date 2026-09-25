@@ -1,3 +1,9 @@
+# Reference layout update — September 25, 2026
+
+The local theme now uses a 232px sidebar, larger patch and navigation, an angular textured masthead, 76px unit cards with the approved icons, a prominent pinned-discussion band, and a full-width activity strip. Unit filtering shows a single empty state and responds to native live-component row updates. The target screenshot supplies layout guidance; discussions, avatars, operations, counts and menu destinations still come from the installed community.
+
+Validated against the real Forumify 1.3.1 templates: 18 render checks, desktop/tablet/phone layout checks, unit filters and empty-state behavior. See `design-qa.md` for evidence and fidelity limits. These changes are local and are not a published release. Refresh theme assets and clear the application cache after deploying them.
+
 # Reference fidelity update â€” v1.2.0
 
 This update includes the original Spearhead patch, a generated decorative terrain texture, subdued condensed heading, tighter sidebar/header/unit proportions, and compact category-labelled discussion rows. Pinned rows appear above the discussion heading through CSS ordering; the native component DOM and query rules stay intact. All displays forum sections in admin order, not a globally sorted feed.

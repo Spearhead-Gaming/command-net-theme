@@ -30,6 +30,13 @@
             <a class="btn-primary" href="{{ path('forumify_forum_forum') }}">Browse forums</a>
         </div>
     {% endfor %}
+    {% if commandNetForums is not empty %}
+        <div class="cn-empty cn-dashboard-empty" role="status" hidden>
+            <h2>No discussions yet</h2>
+            <p>No discussions to display. Choose another unit or visit the forums to start a conversation.</p>
+            <a href="{{ path('forumify_forum_forum') }}">Browse forums <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
+        </div>
+    {% endif %}
 </section>
 <section class="cn-online" aria-label="Community activity">
     {{ component('Forumify\\Admin\\OnlineUsers', {limit: 12}) }}

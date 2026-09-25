@@ -15,7 +15,7 @@
             } %}
             {% for topic in this.result.rows %}
                 {% set primaryTag = topic.tags|first %}
-                {% set cnIcon = topic.pinned ? 'megaphone' : cnCategoryIcons[primaryTag ? primaryTag.slug : '']|default('chat-circle') %}
+                {% set cnIcon = topic.pinned ? 'push-pin-fill' : cnCategoryIcons[primaryTag ? primaryTag.slug : '']|default('chat-circle') %}
                 <li class="cn-topic{% if topic.pinned %} cn-topic-pinned{% endif %}{% if topic.hidden %} topic-hidden{% endif %}">
                     <div class="cn-topic-title">
                         <i class="ph ph-{{ cnIcon }}" aria-hidden="true"></i>
@@ -58,6 +58,7 @@
                             {% endif %}
                         {% endif %}
                     </div>
+                    <a class="cn-topic-open" href="{{ path('forumify_forum_topic', {slug: topic.slug}) }}" aria-label="Open {{ topic.title }}"><i class="ph ph-caret-right" aria-hidden="true"></i></a>
                 </li>
             {% else %}
                 <li class="cn-list-empty">No discussions to display.</li>
