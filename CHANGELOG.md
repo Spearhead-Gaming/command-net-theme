@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 1.2.2
+
+- Renamed the theme's plugin entry from "Command Net" to "Command Net Theme" (author
+  MajesticDev) to disambiguate it from `commandnet-plugin`, which also registers as
+  "Command Net" — the admin plugin list previously showed two same-named rows with
+  different authors.
+- Removed `dev-credentials.local.md`, which had been mistakenly committed despite its own
+  header claiming to be gitignored, and added it to `.gitignore`.
+
 ## 1.2.1
 
 - Version bump only; no functional changes since v1.2.0.
