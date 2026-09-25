@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## 1.2.1
+
+- Version bump only; no functional changes since v1.2.0.
+
+## 1.2.0
+
 - Fix: activating this theme silently broke the admin dashboard's color scheme and
   light/dark toggle. ThemeService generates the site's CSS from whichever theme is
   *active*, without falling back to the base Forumify Theme's variables - so a theme
