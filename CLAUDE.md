@@ -18,7 +18,7 @@ Sibling repos (PHP, `G:\Github Repos`): **commandnet-plugin** (soft dependency â
 operation-status panel calls `command_net_online_count()` and reads its `Operation`
 repository when that plugin is active; the theme still works without it, just with a plainer
 panel), **commandnet-s3-plugin**, **commandnet-discord-plugin**, **commandnet-discord-bot**,
-**forumify-id-card-plugin**.
+**milsim-id-card-plugin**.
 
 ## The unit forums this theme expects
 
